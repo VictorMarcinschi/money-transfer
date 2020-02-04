@@ -1,4 +1,4 @@
-package transfer;
+package transfer.db;
 
 import org.flywaydb.core.Flyway;
 
@@ -6,13 +6,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class AppStarter {
+public class DbMigrationStarter {
 
     private final boolean enableMigrations;
     private final boolean cleanMigrations;
     private final Flyway flyway;
 
-    void start() {
+    public void start() {
         if (enableMigrations) {
             if (cleanMigrations) {
                 flyway.clean();

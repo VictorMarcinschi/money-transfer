@@ -1,16 +1,14 @@
 package transfer.db;
 
+import dagger.Module;
+import dagger.Provides;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.lang3.StringUtils;
+import transfer.properties.ApplicationPropertiesModule;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.lang3.StringUtils;
-import org.flywaydb.core.Flyway;
-
-import dagger.Module;
-import dagger.Provides;
-import transfer.properties.ApplicationPropertiesModule;
 
 import static transfer.properties.ApplicationProperties.DATASOURCE_PASSWORD;
 import static transfer.properties.ApplicationProperties.DATASOURCE_URL;
@@ -35,13 +33,5 @@ public class DatabaseModule {
         }
 
         return dataSource;
-    }
-
-    @Provides
-    @Singleton
-    static Flyway provideFlyway(DataSource dataSource) {
-        return Flyway.configure()
-                .dataSource(dataSource)
-                .load();
     }
 }

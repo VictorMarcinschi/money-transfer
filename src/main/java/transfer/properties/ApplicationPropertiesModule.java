@@ -1,46 +1,67 @@
 package transfer.properties;
 
-import java.util.Properties;
-
-import javax.inject.Named;
-
 import dagger.Module;
 import dagger.Provides;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+
+import javax.inject.Named;
+import java.util.Properties;
 
 import static transfer.properties.ApplicationProperties.DATASOURCE_PASSWORD;
 import static transfer.properties.ApplicationProperties.DATASOURCE_URL;
 import static transfer.properties.ApplicationProperties.DATASOURCE_USER;
+import static transfer.properties.ApplicationProperties.MIGRATIONS_CLEAN;
+import static transfer.properties.ApplicationProperties.MIGRATIONS_ENABLED;
 import static transfer.properties.ApplicationProperties.SERVER_PORT;
 
 @Module
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+@RequiredArgsConstructor
 public class ApplicationPropertiesModule {
 
-    private final Properties properties;
+    private static final String APPLICATION_PROPERTIES = "application.properties";
+    private static final String STRING_FALSE = String.valueOf(false);
+
+    private final String propertiesFileName;
+
+    @Provides
+    @Named(APPLICATION_PROPERTIES)
+    Properties provideApplicationProperties() {
+        return PropertiesUtil.readSystemOverridableProperties(getClass().getClassLoader(), propertiesFileName);
+    }
 
     @Provides
     @Named(DATASOURCE_URL)
-    String provideDatasourceUrl() {
+    String provideDatasourceUrl(@Named(APPLICATION_PROPERTIES) Properties properties) {
         return properties.getProperty(DATASOURCE_URL);
     }
 
     @Provides
     @Named(DATASOURCE_USER)
-    String provideDatasourceUser() {
+    String provideDatasourceUser(@Named(APPLICATION_PROPERTIES) Properties properties) {
         return properties.getProperty(DATASOURCE_USER);
     }
 
     @Provides
     @Named(DATASOURCE_PASSWORD)
-    String provideDatasourcePassword() {
+    String provideDatasourcePassword(@Named(APPLICATION_PROPERTIES) Properties properties) {
         return properties.getProperty(DATASOURCE_PASSWORD);
     }
 
     @Provides
     @Named(SERVER_PORT)
-    int provideServerPort() {
+    int provideServerPort(@Named(APPLICATION_PROPERTIES) Properties properties) {
         return Integer.valueOf(properties.getProperty(DATASOURCE_PASSWORD));
+    }
+
+    @Provides
+    @Named(MIGRATIONS_ENABLED)
+    boolean provideMigrationsEnabled(@Named(APPLICATION_PROPERTIES) Properties properties) {
+        return Boolean.valueOf(properties.getProperty(MIGRATIONS_ENABLED, STRING_FALSE));
+    }
+
+    @Provides
+    @Named(MIGRATIONS_CLEAN)
+    boolean provideMigrationsClean(@Named(APPLICATION_PROPERTIES) Properties properties) {
+        return Boolean.valueOf(properties.getProperty(MIGRATIONS_CLEAN, STRING_FALSE));
     }
 }

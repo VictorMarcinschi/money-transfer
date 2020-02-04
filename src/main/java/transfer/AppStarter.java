@@ -9,10 +9,14 @@ import lombok.RequiredArgsConstructor;
 class AppStarter {
 
     private final boolean enableMigrations;
+    private final boolean cleanMigrations;
     private final Flyway flyway;
 
     void start() {
         if (enableMigrations) {
+            if (cleanMigrations) {
+                flyway.clean();
+            }
             flyway.migrate();
         }
     }

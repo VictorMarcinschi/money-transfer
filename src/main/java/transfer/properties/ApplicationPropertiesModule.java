@@ -50,7 +50,7 @@ public class ApplicationPropertiesModule {
     @Provides
     @Named(SERVER_PORT)
     int provideServerPort(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return Integer.valueOf(properties.getProperty(DATASOURCE_PASSWORD));
+        return Integer.valueOf(properties.getProperty(SERVER_PORT));
     }
 
     @Provides

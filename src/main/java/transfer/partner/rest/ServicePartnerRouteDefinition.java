@@ -1,8 +1,10 @@
 package transfer.partner.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.RequiredArgsConstructor;
 import transfer.rest.HandlerRoute;
+import transfer.rest.JsonDeserializingHandler;
 import transfer.server.SparkRouteDefinition;
 
 import static spark.Spark.post;
@@ -15,6 +17,10 @@ class ServicePartnerRouteDefinition implements SparkRouteDefinition {
 
     @Override
     public void define() {
-        post("/partners", new HandlerRoute(controller::onboardServicePartner), mapper::writeValueAsString);
+        post("/partners", new HandlerRoute(new JsonDeserializingHandler<>(
+                        (dr, p, r) -> controller.onboardServicePartner(dr, r),
+                        mapper,
+                        NewServicePartnerRequest.class)),
+                mapper::writeValueAsString);
     }
 }

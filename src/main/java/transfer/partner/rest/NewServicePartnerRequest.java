@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import transfer.partner.model.ServicePartner;
+import transfer.partner.domain.model.ServicePartner;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package transfer.partner.model;
+package transfer.partner.domain.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;

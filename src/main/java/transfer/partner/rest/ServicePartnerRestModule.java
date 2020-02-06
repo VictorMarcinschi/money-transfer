@@ -12,8 +12,8 @@ import transfer.server.SparkRouteDefinition;
 public class ServicePartnerRestModule {
 
     @Provides
-    static ServicePartnerController provideServicePartnerController(ObjectMapper mapper) {
-        return new ServicePartnerController(mapper);
+    static ServicePartnerController provideServicePartnerController() {
+        return new ServicePartnerController();
     }
 
     @Provides

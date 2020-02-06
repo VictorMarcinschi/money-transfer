@@ -14,4 +14,7 @@ public final class ApplicationProperties {
     public static final String MIGRATIONS_CLEAN = "migrations.clean";
 
     public static final String SERVER_PORT = "server.port";
+
+    public static final String DATE_PATTERN = "defaults.pattern.date";
+    public static final String TIMESTAMP_PATTERN = "defaults.pattern.timestamp";
 }

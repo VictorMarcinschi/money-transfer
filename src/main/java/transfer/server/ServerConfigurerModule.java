@@ -1,20 +1,22 @@
 package transfer.server;
 
-import java.util.List;
-
-import javax.inject.Named;
-
 import dagger.Module;
 import dagger.Provides;
+import transfer.partner.rest.ServicePartnerRestModule;
 import transfer.properties.ApplicationPropertiesModule;
+
+import javax.inject.Named;
+import java.util.Set;
 
 import static transfer.properties.ApplicationProperties.SERVER_PORT;
 
-@Module(includes = ApplicationPropertiesModule.class)
+@Module(includes = {ApplicationPropertiesModule.class, ServicePartnerRestModule.class})
 class ServerConfigurerModule {
 
     @Provides
-    static ServerConfigurer provideServerConfigurer(@Named(SERVER_PORT) int port) {
-        return new SparkServerConfigurer(port, List.of());
+    static ServerConfigurer provideServerConfigurer(@Named(SERVER_PORT) int port,
+            @RouteDefinition Set<SparkRouteDefinition> routeDefinitions) {
+
+        return new SparkServerConfigurer(port, routeDefinitions);
     }
 }

@@ -10,9 +10,11 @@ import java.util.Properties;
 import static transfer.properties.ApplicationProperties.DATASOURCE_PASSWORD;
 import static transfer.properties.ApplicationProperties.DATASOURCE_URL;
 import static transfer.properties.ApplicationProperties.DATASOURCE_USER;
+import static transfer.properties.ApplicationProperties.DATE_PATTERN;
 import static transfer.properties.ApplicationProperties.MIGRATIONS_CLEAN;
 import static transfer.properties.ApplicationProperties.MIGRATIONS_ENABLED;
 import static transfer.properties.ApplicationProperties.SERVER_PORT;
+import static transfer.properties.ApplicationProperties.TIMESTAMP_PATTERN;
 
 @Module
 @RequiredArgsConstructor
@@ -63,5 +65,17 @@ public class ApplicationPropertiesModule {
     @Named(MIGRATIONS_CLEAN)
     boolean provideMigrationsClean(@Named(APPLICATION_PROPERTIES) Properties properties) {
         return Boolean.valueOf(properties.getProperty(MIGRATIONS_CLEAN, STRING_FALSE));
+    }
+
+    @Provides
+    @Named(DATE_PATTERN)
+    String provideDatePattern(@Named(APPLICATION_PROPERTIES) Properties properties) {
+        return properties.getProperty(DATE_PATTERN);
+    }
+
+    @Provides
+    @Named(TIMESTAMP_PATTERN)
+    String provideTimestampPattern(@Named(APPLICATION_PROPERTIES) Properties properties) {
+        return properties.getProperty(TIMESTAMP_PATTERN);
     }
 }

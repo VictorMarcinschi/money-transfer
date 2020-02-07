@@ -1,33 +1,27 @@
 package transfer;
 
-import transfer.config.properties.ApplicationPropertiesModule;
-import transfer.db.DaggerDatabaseTools;
+import lombok.RequiredArgsConstructor;
 import transfer.db.DatabaseTools;
-import transfer.server.DaggerServerConfigurerFactory;
+import transfer.server.ServerConfigurer;
 
+@RequiredArgsConstructor
 public class MoneyTransferApp {
 
+    private final DatabaseTools databaseTools;
+    private final ServerConfigurer serverConfigurer;
+
     public static void main(String[] args) {
-        var applicationProperties = new ApplicationPropertiesModule("application.properties");
-        setupDatabase(applicationProperties);
-        configureServer(applicationProperties);
-    }
-
-    private static void setupDatabase(ApplicationPropertiesModule applicationProperties) {
-        DatabaseTools dbTools = DaggerDatabaseTools.builder()
-                .applicationPropertiesModule(applicationProperties)
-                .build();
-
-        dbTools.migration().start();
-        dbTools.reladomo().start();
-    }
-
-    private static void configureServer(ApplicationPropertiesModule applicationProperties) {
-        var configurer = DaggerServerConfigurerFactory.builder()
-                .applicationPropertiesModule(applicationProperties)
+        MoneyTransferApp app = DaggerMoneyTransferAppFactory.builder()
+                .moneyTransferAppModule(new MoneyTransferAppModule("application.properties"))
                 .build()
-                .configurer();
+                .app();
 
-        configurer.configure();
+        app.start();
+    }
+
+    void start() {
+        databaseTools.migration().start();
+        databaseTools.reladomo().start();
+        serverConfigurer.configure();
     }
 }

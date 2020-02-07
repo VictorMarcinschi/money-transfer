@@ -1,16 +1,18 @@
 package transfer.server;
 
-import dagger.Module;
-import dagger.Provides;
-import transfer.partner.rest.ServicePartnerRestModule;
-import transfer.config.properties.ApplicationPropertiesModule;
+import java.util.Set;
 
 import javax.inject.Named;
-import java.util.Set;
+
+import dagger.Module;
+import dagger.Provides;
+import transfer.config.properties.ApplicationPropertiesModule;
+import transfer.partner.rest.ServicePartnerRestModule;
+import transfer.rest.RestModule;
 
 import static transfer.config.properties.ApplicationProperties.SERVER_PORT;
 
-@Module(includes = {ApplicationPropertiesModule.class, ServicePartnerRestModule.class})
+@Module(includes = {ApplicationPropertiesModule.class, RestModule.class, ServicePartnerRestModule.class})
 class ServerConfigurerModule {
 
     @Provides

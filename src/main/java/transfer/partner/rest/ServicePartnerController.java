@@ -17,7 +17,6 @@ class ServicePartnerController {
         if (result.isSuccessful()) {
             return builder
                     .status(201)
-                    .location(request.matchedPath() + "/" + partnerRequest.getIdentifier())
                     .body(result.getValue())
                     .build();
         }

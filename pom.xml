@@ -21,6 +21,9 @@
         <logback.version>1.2.3</logback.version>
         <jackson.version>2.10.2</jackson.version>
         <reladomo.version>17.1.4</reladomo.version>
+
+        <junit.version>4.13</junit.version>
+        <jbehave.version>4.6.1</jbehave.version>
     </properties>
 
     <dependencies>
@@ -99,6 +102,24 @@
             <groupId>com.goldmansachs.reladomo</groupId>
             <artifactId>reladomo-test-util</artifactId>
             <version>${reladomo.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jbehave</groupId>
+            <artifactId>jbehave-core</artifactId>
+            <version>${jbehave.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -200,13 +221,42 @@
                         <artifactId>reladomogen</artifactId>
                         <version>${reladomo.version}</version>
                     </dependency>
-
                     <dependency>
                         <groupId>com.goldmansachs.reladomo</groupId>
                         <artifactId>reladomo-gen-util</artifactId>
                         <version>${reladomo.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <!-- Excludes integration tests when unit tests are run. -->
+                    <excludes>
+                        <exclude>**/*IT.java</exclude>
+                        <exclude>**/*Story.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <phase>integration-test</phase>
+                        <configuration>
+                            <excludes>
+                                <exclude>none</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*IT.java</include>
+                                <include>**/*Story.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 
+import static spark.Spark.notFound;
 import static spark.Spark.port;
 
 @RequiredArgsConstructor

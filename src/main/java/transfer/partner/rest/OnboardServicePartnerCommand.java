@@ -1,12 +1,27 @@
 package transfer.partner.rest;
 
-import transfer.rest.Command;
-import transfer.rest.CommandResult;
+import lombok.RequiredArgsConstructor;
+import transfer.domain.Command;
+import transfer.domain.CommandResult;
+import transfer.partner.repository.ServicePartnerRepository;
+import transfer.validation.ValidationResult;
 
-class OnboardServicePartnerCommand implements Command<NewServicePartnerRequest, String> {
+import java.time.Clock;
+
+@RequiredArgsConstructor
+class OnboardServicePartnerCommand implements Command<OnboardServicePartnerRequest, String> {
+
+    private final ServicePartnerRepository servicePartnerRepository;
+    private final Clock systemClock;
 
     @Override
-    public CommandResult<String> execute(NewServicePartnerRequest request) {
-        return null;
+    public CommandResult<String> execute(OnboardServicePartnerRequest request) {
+        var partner = request.toServicePartner(systemClock);
+        servicePartnerRepository.create(partner);
+
+        return CommandResult.<String>builder()
+                .validationResult(new ValidationResult())
+                .value(partner.getIdentifier())
+                .build();
     }
 }

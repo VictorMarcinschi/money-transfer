@@ -3,12 +3,12 @@ package transfer.server;
 import dagger.Module;
 import dagger.Provides;
 import transfer.partner.rest.ServicePartnerRestModule;
-import transfer.properties.ApplicationPropertiesModule;
+import transfer.config.properties.ApplicationPropertiesModule;
 
 import javax.inject.Named;
 import java.util.Set;
 
-import static transfer.properties.ApplicationProperties.SERVER_PORT;
+import static transfer.config.properties.ApplicationProperties.SERVER_PORT;
 
 @Module(includes = {ApplicationPropertiesModule.class, ServicePartnerRestModule.class})
 class ServerConfigurerModule {

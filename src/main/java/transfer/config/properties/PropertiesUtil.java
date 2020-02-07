@@ -1,4 +1,4 @@
-package transfer.properties;
+package transfer.config.properties;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

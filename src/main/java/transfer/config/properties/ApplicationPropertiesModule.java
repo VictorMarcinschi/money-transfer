@@ -1,4 +1,4 @@
-package transfer.properties;
+package transfer.config.properties;
 
 import dagger.Module;
 import dagger.Provides;
@@ -6,15 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 import javax.inject.Named;
 import java.util.Properties;
-
-import static transfer.properties.ApplicationProperties.DATASOURCE_PASSWORD;
-import static transfer.properties.ApplicationProperties.DATASOURCE_URL;
-import static transfer.properties.ApplicationProperties.DATASOURCE_USER;
-import static transfer.properties.ApplicationProperties.DATE_PATTERN;
-import static transfer.properties.ApplicationProperties.MIGRATIONS_CLEAN;
-import static transfer.properties.ApplicationProperties.MIGRATIONS_ENABLED;
-import static transfer.properties.ApplicationProperties.SERVER_PORT;
-import static transfer.properties.ApplicationProperties.TIMESTAMP_PATTERN;
 
 @Module
 @RequiredArgsConstructor
@@ -32,50 +23,50 @@ public class ApplicationPropertiesModule {
     }
 
     @Provides
-    @Named(DATASOURCE_URL)
+    @Named(ApplicationProperties.DATASOURCE_URL)
     String provideDatasourceUrl(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return properties.getProperty(DATASOURCE_URL);
+        return properties.getProperty(ApplicationProperties.DATASOURCE_URL);
     }
 
     @Provides
-    @Named(DATASOURCE_USER)
+    @Named(ApplicationProperties.DATASOURCE_USER)
     String provideDatasourceUser(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return properties.getProperty(DATASOURCE_USER);
+        return properties.getProperty(ApplicationProperties.DATASOURCE_USER);
     }
 
     @Provides
-    @Named(DATASOURCE_PASSWORD)
+    @Named(ApplicationProperties.DATASOURCE_PASSWORD)
     String provideDatasourcePassword(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return properties.getProperty(DATASOURCE_PASSWORD);
+        return properties.getProperty(ApplicationProperties.DATASOURCE_PASSWORD);
     }
 
     @Provides
-    @Named(SERVER_PORT)
+    @Named(ApplicationProperties.SERVER_PORT)
     int provideServerPort(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return Integer.valueOf(properties.getProperty(SERVER_PORT));
+        return Integer.valueOf(properties.getProperty(ApplicationProperties.SERVER_PORT));
     }
 
     @Provides
-    @Named(MIGRATIONS_ENABLED)
+    @Named(ApplicationProperties.MIGRATIONS_ENABLED)
     boolean provideMigrationsEnabled(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return Boolean.valueOf(properties.getProperty(MIGRATIONS_ENABLED, STRING_FALSE));
+        return Boolean.valueOf(properties.getProperty(ApplicationProperties.MIGRATIONS_ENABLED, STRING_FALSE));
     }
 
     @Provides
-    @Named(MIGRATIONS_CLEAN)
+    @Named(ApplicationProperties.MIGRATIONS_CLEAN)
     boolean provideMigrationsClean(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return Boolean.valueOf(properties.getProperty(MIGRATIONS_CLEAN, STRING_FALSE));
+        return Boolean.valueOf(properties.getProperty(ApplicationProperties.MIGRATIONS_CLEAN, STRING_FALSE));
     }
 
     @Provides
-    @Named(DATE_PATTERN)
+    @Named(ApplicationProperties.DATE_PATTERN)
     String provideDatePattern(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return properties.getProperty(DATE_PATTERN);
+        return properties.getProperty(ApplicationProperties.DATE_PATTERN);
     }
 
     @Provides
-    @Named(TIMESTAMP_PATTERN)
+    @Named(ApplicationProperties.TIMESTAMP_PATTERN)
     String provideTimestampPattern(@Named(APPLICATION_PROPERTIES) Properties properties) {
-        return properties.getProperty(TIMESTAMP_PATTERN);
+        return properties.getProperty(ApplicationProperties.TIMESTAMP_PATTERN);
     }
 }

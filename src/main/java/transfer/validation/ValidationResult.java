@@ -1,7 +1,10 @@
 package transfer.validation;
 
+import lombok.Getter;
+
 import java.util.Optional;
 
+@Getter
 public class ValidationResult {
 
     private Optional<ValidationError> error;

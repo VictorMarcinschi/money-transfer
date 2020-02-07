@@ -1,0 +1,5 @@
+<MithraRuntime>
+    <ConnectionManager className="transfer.db.H2ConnectionManager">
+        <MithraObjectConfiguration className="transfer.partner.model.ServicePartner" cacheType="partial" />
+    </ConnectionManager>
+</MithraRuntime>

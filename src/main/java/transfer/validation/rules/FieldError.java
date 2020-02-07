@@ -3,14 +3,15 @@ package transfer.validation.rules;
 import transfer.validation.SimpleValidationError;
 import transfer.validation.ValidationError;
 
-enum GenericError {
+enum FieldError {
     
     NULL_VALUE("Field '%s' is required but not provided"),
-    BLANK_VALUE("Field '%s' is required and should not be blank");
+    BLANK_VALUE("Field '%s' is required and should not be blank"),
+    NON_POSITIVE_NUMBER("Field '%s' should be a positive number");
 
     private final String messageFormat;
 
-    GenericError(String messageFormat) {
+    FieldError(String messageFormat) {
         this.messageFormat = messageFormat;
     }
 

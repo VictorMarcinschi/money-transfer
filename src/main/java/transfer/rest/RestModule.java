@@ -9,15 +9,15 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import dagger.Module;
 import dagger.Provides;
-import transfer.properties.ApplicationPropertiesModule;
+import transfer.config.properties.ApplicationPropertiesModule;
 
 import javax.inject.Named;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static transfer.properties.ApplicationProperties.DATE_PATTERN;
-import static transfer.properties.ApplicationProperties.TIMESTAMP_PATTERN;
+import static transfer.config.properties.ApplicationProperties.DATE_PATTERN;
+import static transfer.config.properties.ApplicationProperties.TIMESTAMP_PATTERN;
 
 @Module(includes = ApplicationPropertiesModule.class)
 public class RestModule {

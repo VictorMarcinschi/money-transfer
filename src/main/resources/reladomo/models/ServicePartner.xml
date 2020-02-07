@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<MithraObject objectType="transactional"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="reladomoobject.xsd">
+
+    <PackageName>transfer.partner.model</PackageName>
+    <ClassName>ServicePartner</ClassName>
+    <DefaultTable>service_partners</DefaultTable>
+
+    <Attribute name="id" javaType="int" columnName="id" primaryKey="true" primaryKeyGeneratorStrategy="Max"/>
+    <Attribute name="identifier" javaType="String" columnName="identifier" nullable="false" maxLength="255"/>
+    <Attribute name="kycExpiry" javaType="Timestamp" columnName="kyc_expiry" nullable="false"/>
+    <Attribute name="apiBasePath" javaType="String" columnName="api_base_path" nullable="false" maxLength="1024"/>
+
+    <Index name="uqServicePartner" unique="true">identifier</Index>
+</MithraObject>

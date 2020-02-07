@@ -1,24 +1,25 @@
 package transfer;
 
-import transfer.db.DaggerDbMigrationStarterFactory;
-import transfer.properties.ApplicationPropertiesModule;
+import transfer.config.properties.ApplicationPropertiesModule;
+import transfer.db.DaggerDatabaseTools;
+import transfer.db.DatabaseTools;
 import transfer.server.DaggerServerConfigurerFactory;
 
 public class MoneyTransferApp {
 
     public static void main(String[] args) {
         var applicationProperties = new ApplicationPropertiesModule("application.properties");
-        migrateDatabase(applicationProperties);
+        setupDatabase(applicationProperties);
         configureServer(applicationProperties);
     }
 
-    private static void migrateDatabase(ApplicationPropertiesModule applicationProperties) {
-        var migration = DaggerDbMigrationStarterFactory.builder()
+    private static void setupDatabase(ApplicationPropertiesModule applicationProperties) {
+        DatabaseTools dbTools = DaggerDatabaseTools.builder()
                 .applicationPropertiesModule(applicationProperties)
-                .build()
-                .starter();
+                .build();
 
-        migration.start();
+        dbTools.migration().start();
+        dbTools.reladomo().start();
     }
 
     private static void configureServer(ApplicationPropertiesModule applicationProperties) {

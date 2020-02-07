@@ -1,4 +1,4 @@
-package transfer.rest;
+package transfer.domain;
 
 public interface Command<REQ, RES> {
 

@@ -9,13 +9,13 @@ import transfer.validation.ValidationResult;
 import java.time.Clock;
 
 @RequiredArgsConstructor
-class OnboardServicePartnerCommand implements Command<OnboardServicePartnerRequest, String> {
+class RegisterServicePartnerCommand implements Command<RegisterServicePartnerRequest, String> {
 
     private final ServicePartnerRepository servicePartnerRepository;
     private final Clock systemClock;
 
     @Override
-    public CommandResult<String> execute(OnboardServicePartnerRequest request) {
+    public CommandResult<String> execute(RegisterServicePartnerRequest request) {
         var partner = request.toServicePartner(systemClock);
         servicePartnerRepository.create(partner);
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<MithraObject objectType="transactional"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="reladomoobject.xsd">
+
+    <PackageName>transfer.user.model</PackageName>
+    <ClassName>User</ClassName>
+    <DefaultTable>users</DefaultTable>
+
+    <Attribute name="id" javaType="int" columnName="id" primaryKey="true" primaryKeyGeneratorStrategy="Max"/>
+    <Attribute name="identifier" javaType="String" columnName="identifier" nullable="false" maxLength="36"/>
+    <Attribute name="confirmed" javaType="boolean" columnName="confirmed" nullable="false"/>
+    <Attribute name="confirmingPartnerId" javaType="int" columnName="confirming_partner_id"/>
+    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
+    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
+
+    <Relationship name="userDetails" relatedObject="UserDetails" relatedIsDependent="true" cardinality="one-to-one">
+        this.id = UserDetails.userId
+    </Relationship>
+
+    <Relationship name="confirmingPartner" relatedObject="ServicePartner" cardinality="many-to-one">
+        this.confirmingPartnerId = ServicePartner.id
+    </Relationship>
+
+    <Index name="uqUser" unique="true">identifier</Index>
+</MithraObject>

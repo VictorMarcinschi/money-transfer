@@ -1,20 +1,18 @@
 package transfer.partner.stories;
 
-import java.util.List;
+import transfer.LifecycleSteps;
+import transfer.jbehave.AbstractStory;
+import transfer.partner.rest.OnboardPartnerSteps;
 
-import org.jbehave.core.configuration.Configuration;
-import org.jbehave.core.junit.JUnitStory;
-import org.jbehave.core.steps.InjectableStepsFactory;
-
-class OnboardPartnerStory extends JUnitStory {
+public class OnboardPartnerStory extends AbstractStory {
 
     @Override
-    public Configuration configuration() {
-        return super.configuration();
+    public Object[] steps() {
+        return new Object[]{new LifecycleSteps(), new OnboardPartnerSteps()};
     }
 
     @Override
-    public InjectableStepsFactory stepsFactory() {
-        return super.stepsFactory();
+    protected String story() {
+        return "stories/partner/onboard_partner.story";
     }
 }

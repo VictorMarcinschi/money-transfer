@@ -6,7 +6,7 @@ import dagger.Provides;
 import java.time.Clock;
 
 @Module
-public class ClockModule {
+class ClockModule {
 
     @Provides
     static Clock provideSystemClock() {

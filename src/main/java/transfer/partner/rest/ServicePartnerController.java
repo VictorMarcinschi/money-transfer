@@ -1,30 +1,16 @@
 package transfer.partner.rest;
 
 import lombok.RequiredArgsConstructor;
-import spark.Request;
 import transfer.domain.Command;
 import transfer.rest.RestResponse;
 
 @RequiredArgsConstructor
 class ServicePartnerController {
 
-    private final Command<OnboardServicePartnerRequest, String> onboardPartnerCommand;
+    private final Command<RegisterServicePartnerRequest, String> onboardPartnerCommand;
 
-    RestResponse onboardServicePartner(OnboardServicePartnerRequest partnerRequest, Request request) {
+    RestResponse registerServicePartner(RegisterServicePartnerRequest partnerRequest) {
         var result = onboardPartnerCommand.execute(partnerRequest);
-
-        var builder = RestResponse.builder();
-        if (result.isSuccessful()) {
-            return builder
-                    .status(201)
-                    .body(result.getValue())
-                    .build();
-        }
-
-        var error = result.getError();
-        return builder
-                .status(error.httpStatus())
-                .body(error.message())
-                .build();
+        return RestResponse.builderFrom(result, 201).build();
     }
 }

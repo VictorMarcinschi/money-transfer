@@ -18,9 +18,9 @@ class ServicePartnerRouteDefinition implements SparkRouteDefinition {
     @Override
     public void define() {
         post("/partners", new HandlerRoute(new JsonDeserializingHandler<>(
-                        (dr, p, r) -> controller.onboardServicePartner(dr, r),
+                        (dr, p, r) -> controller.registerServicePartner(dr),
                         mapper,
-                        OnboardServicePartnerRequest.class)),
+                        RegisterServicePartnerRequest.class)),
                 mapper::writeValueAsString);
     }
 }

@@ -1,3 +1,7 @@
 <Mithra>
     <MithraObjectResource name="ServicePartner"/>
+    <MithraObjectResource name="User"/>
+    <MithraObjectResource name="UserDetails"/>
+    <MithraObjectResource name="Transfer"/>
+    <MithraObjectResource name="Retrieval"/>
 </Mithra>

@@ -1,5 +1,9 @@
 <MithraRuntime>
     <ConnectionManager className="transfer.db.H2ConnectionManager">
         <MithraObjectConfiguration className="transfer.partner.model.ServicePartner" cacheType="partial" />
+        <MithraObjectConfiguration className="transfer.user.model.User" cacheType="partial" />
+        <MithraObjectConfiguration className="transfer.user.model.UserDetails" cacheType="partial" />
+        <MithraObjectConfiguration className="transfer.user.model.Transfer" cacheType="none" />
+        <MithraObjectConfiguration className="transfer.user.model.Retrieval" cacheType="none" />
     </ConnectionManager>
 </MithraRuntime>

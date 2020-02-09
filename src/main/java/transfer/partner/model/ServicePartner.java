@@ -2,11 +2,13 @@ package transfer.partner.model;
 
 import java.sql.Timestamp;
 import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 public class ServicePartner extends ServicePartnerAbstract {
 
-    public ServicePartner() {
+    ServicePartner() {
         super();
         // You must not modify this constructor. Mithra calls this internally.
         // You can call this constructor. You can also add new constructors.
@@ -16,6 +18,10 @@ public class ServicePartner extends ServicePartnerAbstract {
         setIdentifier(identifier);
         setKycExpiry(Timestamp.from(kycExpiry.atStartOfDay(clock.getZone()).toInstant()));
         setApiBasePath(apiBasePath);
+
+        var now = ZonedDateTime.now(clock).toInstant();
+        setCreatedAt(Timestamp.from(now));
+        setUpdatedAt(Timestamp.from(now));
     }
 
     public LocalDate kycExpiry() {

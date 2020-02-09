@@ -17,6 +17,7 @@ public class DbMigrationStarter {
             if (cleanMigrations) {
                 flyway.clean();
             }
+            flyway.repair();
             flyway.migrate();
         }
     }

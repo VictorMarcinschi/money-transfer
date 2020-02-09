@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<MithraObject objectType="transactional"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="reladomoobject.xsd">
+
+    <PackageName>transfer.moneytransfer.model</PackageName>
+    <ClassName>Retrieval</ClassName>
+    <DefaultTable>retrievals</DefaultTable>
+
+    <Attribute name="id" javaType="int" columnName="id" primaryKey="true" primaryKeyGeneratorStrategy="Max"/>
+    <Attribute name="transferId" javaType="int" columnName="transfer_id" nullable="false" readonly="true"/>
+    <Attribute name="retrievingServicePartnerId" javaType="int" columnName="retrieving_service_partner_id"
+               nullable="false" readonly="true"/>
+
+    <Attribute name="status" javaType="String" columnName="status" nullable="false" maxLength="20"/>
+    <Attribute name="confirmationCode" javaType="String" columnName="confirmation_code" nullable="false"
+               readonly="true" maxLength="6"/>
+
+    <Attribute name="confirmationExpiry" javaType="Timestamp" columnName="confirmation_expiry" nullable="false"
+               readonly="true"/>
+
+    <Attribute name="confirmedAt" javaType="Timestamp" columnName="confirmed_at"/>
+    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
+    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
+
+    <Relationship name="retrievingServicePartner" relatedObject="ServicePartner" cardinality="many-to-one">
+        this.retrievingServicePartnerId = ServicePartner.id
+    </Relationship>
+
+    <Index name="uqRetrieval" unique="true">transferId,confirmationCode</Index>
+
+</MithraObject>

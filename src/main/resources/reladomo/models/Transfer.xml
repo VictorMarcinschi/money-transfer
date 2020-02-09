@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<MithraObject objectType="transactional"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="reladomoobject.xsd">
+
+    <PackageName>transfer.moneytransfer.model</PackageName>
+    <ClassName>Transfer</ClassName>
+    <DefaultTable>transfers</DefaultTable>
+
+    <Attribute name="id" javaType="int" columnName="id" primaryKey="true" primaryKeyGeneratorStrategy="Max"/>
+    <Attribute name="identifier" javaType="String" columnName="identifier" nullable="false" readonly="true"
+               maxLength="36"/>
+
+    <Attribute name="sendingServicePartnerId" javaType="int" columnName="sending_service_partner_id" nullable="false"
+               readonly="true"/>
+
+    <Attribute name="sendingUserId" javaType="int" columnName="sending_user_id" nullable="false" readonly="true"/>
+    <Attribute name="receivingUserId" javaType="int" columnName="receiving_user_id" nullable="false" readonly="true"/>
+    <Attribute name="receiverAttribute" javaType="String" columnName="receiver_attr" nullable="false" readonly="true"
+               maxLength="20"/>
+
+    <Attribute name="currencyCode" javaType="String" columnName="currency_code" nullable="false" readonly="true"
+               maxLength="10"/>
+
+    <Attribute name="amount" javaType="BigDecimal" precision="13" scale="5" columnName="amount" nullable="false"
+               readonly="true"/>
+
+    <Attribute name="status" javaType="String" columnName="status" nullable="false" maxLength="20"/>
+    <Attribute name="retrievalExpiry" javaType="Date" columnName="retrieval_expiry" nullable="false" readonly="true"/>
+    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
+    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
+
+    <Relationship name="sendingServicePartner" relatedObject="ServicePartner" cardinality="many-to-one">
+        this.sendingServicePartnerId = ServicePartner.id
+    </Relationship>
+
+    <Relationship name="sendingUser" relatedObject="User" cardinality="many-to-one">
+        this.sendingUserId = User.id
+    </Relationship>
+
+    <Relationship name="receivingUser" relatedObject="User" cardinality="many-to-one">
+        this.receivingUserId = User.id
+    </Relationship>
+
+    <Index name="uqTransfer" unique="true">identifier</Index>
+
+</MithraObject>

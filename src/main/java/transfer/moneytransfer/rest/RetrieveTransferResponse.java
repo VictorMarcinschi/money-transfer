@@ -8,6 +8,7 @@ import transfer.moneytransfer.model.Retrieval;
 import transfer.moneytransfer.model.UserAttribute;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @RequiredArgsConstructor
 @Getter
@@ -26,8 +27,8 @@ class RetrieveTransferResponse {
     @JsonProperty
     private final String sendCodeTo;
 
-    RetrieveTransferResponse(Retrieval retrieval) {
-        this.confirmationDueBy = retrieval.confirmationExpiry();
+    RetrieveTransferResponse(Retrieval retrieval, ZoneId zoneId) {
+        this.confirmationDueBy = retrieval.confirmationExpiry(zoneId);
         this.confirmationCode = retrieval.getConfirmationCode();
         this.sendCodeVia = retrieval.retrievalMethod();
         this.sendCodeTo = retrieval.receiver();

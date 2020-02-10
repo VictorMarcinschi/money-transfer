@@ -37,7 +37,7 @@ class ConfirmRetrievalCommand implements Command<ConfirmRetrievalRequest, Confir
                 .partnerIdentifier(partner.getIdentifier())
                 .partnerApiBasePath(partner.getApiBasePath())
                 .receiverIdentifier(receivingUser.getUUIDIdentifier())
-                .confirmedAt(retrieval.confirmedAt())
+                .confirmedAt(retrieval.confirmedAt(systemClock.getZone()))
                 .confirmedVia(transfer.receiverAttribute())
                 .currencyCode(transfer.getCurrencyCode())
                 .amount(transfer.getAmount())

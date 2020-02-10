@@ -11,6 +11,9 @@ import transfer.user.repository.UserRepository;
 import transfer.user.service.UserService;
 import transfer.validation.ValidationResult;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ class SubmitTransferCommand implements Command<SubmitTransferRequest, SubmitTran
     private final UserRepository userRepository;
     private final UserService userService;
     private final TransferService transferService;
+    private final Clock systemClock;
 
     @Override
     public CommandResult<SubmitTransferResponse> execute(SubmitTransferRequest request) {
@@ -33,6 +37,11 @@ class SubmitTransferCommand implements Command<SubmitTransferRequest, SubmitTran
         var response = SubmitTransferResponse.builder()
                 .senderIdentifier(sender.getUUIDIdentifier())
                 .transferIdentifier(transfer.getIdentifier())
+                .retrievalDueBy(LocalDate.ofInstant(
+                        Instant.ofEpochMilli(transfer.getRetrievalExpiry().getTime()),
+                        systemClock.getZone()))
+                .sendNotificationVia(transfer.receiverAttribute())
+                .sendNotificationTo(transfer.receiver())
                 .build();
 
         return CommandResult.<SubmitTransferResponse>builder()

@@ -1,5 +1,7 @@
 package transfer.moneytransfer.rest;
 
+import java.time.Clock;
+
 import lombok.RequiredArgsConstructor;
 import transfer.domain.Command;
 import transfer.domain.CommandResult;
@@ -12,6 +14,7 @@ class RetrieveTransferCommand implements Command<RetrieveTransferRequest, Retrie
 
     private final ServicePartnerRepository servicePartnerRepository;
     private final TransferService transferService;
+    private final Clock systemClock;
 
     @Override
     public CommandResult<RetrieveTransferResponse> execute(RetrieveTransferRequest request) {
@@ -20,7 +23,7 @@ class RetrieveTransferCommand implements Command<RetrieveTransferRequest, Retrie
 
         return CommandResult.<RetrieveTransferResponse>builder()
                 .validationResult(new ValidationResult())
-                .value(new RetrieveTransferResponse(retrieval))
+                .value(new RetrieveTransferResponse(retrieval, systemClock.getZone()))
                 .build();
     }
 }

@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class Retrieval extends RetrievalAbstract {
@@ -65,12 +66,12 @@ public class Retrieval extends RetrievalAbstract {
         setUpdatedAt(Timestamp.from(now.toInstant()));
     }
 
-    public LocalDateTime confirmationExpiry() {
-        return getConfirmationExpiry().toLocalDateTime();
+    public LocalDateTime confirmationExpiry(ZoneId zoneId) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(getConfirmationExpiry().getTime()), zoneId);
     }
 
-    public LocalDateTime confirmedAt() {
-        return getConfirmedAt().toLocalDateTime();
+    public LocalDateTime confirmedAt(ZoneId zoneId) {
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(getConfirmedAt().getTime()), zoneId);
     }
 
     public UserAttribute retrievalMethod() {

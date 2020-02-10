@@ -52,18 +52,21 @@ public class TransferModule {
             ServicePartnerRepository servicePartnerRepository,
             UserRepository userRepository,
             UserService userService,
-            TransferService transferService) {
+            TransferService transferService,
+            Clock systemClock) {
 
-        var command = new SubmitTransferCommand(servicePartnerRepository, userRepository, userService, transferService);
+        var command = new SubmitTransferCommand(servicePartnerRepository, userRepository, userService,
+                transferService, systemClock);
+
         return new TransactionalCommand<>(command);
     }
 
     @Provides
     @Named(COMMAND_RETRIEVE)
     static Command<RetrieveTransferRequest, RetrieveTransferResponse> provideRetrieveCommand(
-            ServicePartnerRepository partnerRepository, TransferService transferService) {
+            ServicePartnerRepository partnerRepository, TransferService transferService, Clock systemClock) {
 
-        var command = new RetrieveTransferCommand(partnerRepository, transferService);
+        var command = new RetrieveTransferCommand(partnerRepository, transferService, systemClock);
         return new TransactionalCommand<>(command);
     }
 

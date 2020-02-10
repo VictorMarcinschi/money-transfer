@@ -18,11 +18,11 @@ public class OnboardPartnerSteps {
 
     private TestHttpClient client;
 
-    private String partnerIdentifier;
-    private int kycValidityMonths;
-    private String apiBasePath;
+    protected String partnerIdentifier;
+    protected int kycValidityMonths;
+    protected String apiBasePath;
 
-    private TestHttpResponse<String> testHttpResponse;
+    protected TestHttpResponse<String> onboardPartnerResponse;
 
     @Given("the onboarding processor completes the onboarding of a new partner")
     public void givenPartnerOnboardingComplete() {
@@ -52,25 +52,25 @@ public class OnboardPartnerSteps {
                 .apiBasePath(apiBasePath)
                 .build();
 
-        testHttpResponse = client.post(REGISTER_URL, request, String.class);
+        onboardPartnerResponse = client.post(REGISTER_URL, request, String.class);
     }
 
     @Then("the money transfer service sends a response")
     public void thenResponseSent() {
-        assertThat(Optional.ofNullable(testHttpResponse.getRawResponse())).isPresent();
-        assertThat(Optional.ofNullable(testHttpResponse.getResponse())).isPresent();
+        assertThat(Optional.ofNullable(onboardPartnerResponse.getRawResponse())).isPresent();
+        assertThat(Optional.ofNullable(onboardPartnerResponse.getResponse())).isPresent();
     }
 
     @Then("the response status is $status")
     public void thenResponseStatus(@Named("status") int status) {
-        assertThat(testHttpResponse.getRawResponse())
+        assertThat(onboardPartnerResponse.getRawResponse())
                 .extracting(r -> r.code())
                 .isEqualTo(status);
     }
 
     @Then("the response body is the identifier of the partner from the sent request")
     public void thenResponseBody() {
-        assertThat(testHttpResponse).extracting(r -> r.getResponse())
+        assertThat(onboardPartnerResponse).extracting(r -> r.getResponse())
                 .isEqualTo(partnerIdentifier);
     }
 }

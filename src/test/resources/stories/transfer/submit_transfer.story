@@ -9,7 +9,7 @@ Scenario: An end user submits a money transfer via one of the onboarded service 
 
 GivenStories: stories/partner/onboard_partner.story
 
-Given a service partner enabled end user submits a money transfer
+Given an end user submits a money transfer
 And the end user's email is goldman@bank.com
 And the end user's phone number is 911
 And the receiving user is identified by EMAIL
@@ -23,5 +23,5 @@ And the service API GW forwards the request to the money transfer service
 
 Then the money transfer service sends a response
 And the response status is 201
-And the response body contains the sending end user's identifier assigned by the service
-And the response body contains an identifier for the submitted transfer
+And it contains the sending end user's identifier assigned by the service
+And it contains an identifier for the submitted transfer

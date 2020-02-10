@@ -9,12 +9,15 @@ Scenario: An end user wants to retrieve a money transfer via one of the onboarde
 
 GivenStories: stories/partner/submit_transfer.story
 
-Given a service partner end user submits a transfer retrieval request
+Given a new service partner OFFSHRBANK is onboarded for 1 month with the API at http://offshore.pn/api
+And one if its end user submits a retrieval for a transfer
 
-When the service partner sends a request to the service API gateway to retrieve the transfer
+When the service partner forwards the request to the service API gateway
 And the service API GW forwards the request to the money transfer service
 
 Then the money transfer service sends a response
 And the response status is 201
-And the response body contains the sending end user's identifier assigned by the service
-And the response body contains an identifier for the submitted transfer
+And it contains a timestamp representing the retrieval confirmation due by time
+And it contains a secret code to use for retrieval confirmation
+And it contains the secret code delivery method
+And it contains the end user requisite that matches the one in the submitted transfer

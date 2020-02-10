@@ -1,6 +1,6 @@
 # Money Transfer Service
 
-##Description
+## Description
 Microservice responsible for receiving money transfer submissions from end users using e-mail or phone number
 through a service partner (bank, payment processor etc.) and assisting their retrieval by receiving end users through the same or any
 other service partner.
@@ -8,7 +8,7 @@ other service partner.
 The microservice receives any request from an API Gateway, which communicates directly with service
 partners and also integrates the Money Transfer Service's other components, having an orchestration role.
 
-##Flows
+## Flows
 
 ### Onboard Service Partner
 **POST */partners***
@@ -68,8 +68,7 @@ ORM Framework: Reladomo
 Rest Framework: Spark Java (uses embedded Jetty server)
 <br/>
 Testing Framework: JUnit 4 and JBehave (tests WIP)
-###
-  
+
 ## Building & Running
 Make sure you have Maven and Java 11 installed and added to PATH.
 ```shell script

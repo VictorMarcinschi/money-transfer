@@ -16,7 +16,7 @@ public class OnboardPartnerSteps {
 
     private static final String REGISTER_URL = "/partners";
 
-    private TestHttpClient client;
+    protected TestHttpClient client;
 
     protected String partnerIdentifier;
     protected int kycValidityMonths;
@@ -55,13 +55,13 @@ public class OnboardPartnerSteps {
         onboardPartnerResponse = client.post(REGISTER_URL, request, String.class);
     }
 
-    @Then("the money transfer service sends a response")
+    @Then("the money transfer service sends a onboard partner response")
     public void thenResponseSent() {
         assertThat(Optional.ofNullable(onboardPartnerResponse.getRawResponse())).isPresent();
         assertThat(Optional.ofNullable(onboardPartnerResponse.getResponse())).isPresent();
     }
 
-    @Then("the response status is $status")
+    @Then("the onboard partner response status is $status")
     public void thenResponseStatus(@Named("status") int status) {
         assertThat(onboardPartnerResponse.getRawResponse())
                 .extracting(r -> r.code())

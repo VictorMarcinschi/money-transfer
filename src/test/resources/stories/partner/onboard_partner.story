@@ -13,6 +13,6 @@ And the partner specifies its API base path at https://transfers.maniforppl.com/
 
 When the onboarding processor sends a request to the money transfer service to register the partner
 
-Then the money transfer service sends a response
-And the response status is 201
+Then the money transfer service sends a onboard partner response
+And the onboard partner response status is 201
 And the response body is the identifier of the partner from the sent request

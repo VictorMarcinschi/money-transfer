@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7b8b26fc-0bb8-4da6-9fea-c4d71047ac65",
+		"_postman_id": "6e70e6ec-d68f-4589-ab69-b1ecf3f31af5",
 		"name": "Money Transfer Service Demo",
 		"description": "Demo of the Money Transfer Service implemented as part of the job interview task",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -176,7 +176,7 @@
 			"response": []
 		},
 		{
-			"name": "Retrieve Money Transfer Copy",
+			"name": "Confirm Retrieval",
 			"request": {
 				"method": "PATCH",
 				"header": [
@@ -239,25 +239,25 @@
 	],
 	"variable": [
 		{
-			"id": "a072632f-3906-4f37-a3ff-f55b9e974c98",
+			"id": "567eed16-f347-4272-abd9-3c8f213550c0",
 			"key": "SENDER_IDENTIFIER",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "72165604-f009-4b53-8b13-595e5cf43c61",
+			"id": "1ed933f8-fede-4933-a161-058031064b56",
 			"key": "TRANSFER_IDENTIFIER",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "852fc40d-1301-4c45-92bd-f72caba3245d",
+			"id": "b062b8d2-c9ae-4336-8d48-d777ed9dd3ee",
 			"key": "CONFIRMATION_CODE",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "4666d51b-d79c-4923-a536-d04defa8a218",
+			"id": "ced00a14-8011-44ce-9958-67642ccf7c85",
 			"key": "SERVICE_PARTNER",
 			"value": "ONSHORBANK",
 			"type": "string"

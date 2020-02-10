@@ -6,8 +6,10 @@ As a service partner
 I want to be able to forward money transfer requests to the money transfer service
 
 Scenario: An end user submits a money transfer via one of the onboarded service partners
-Given the service partner ONSHORBANK has been onboarded successfully
-And a service partner enabled end user submits a money transfer
+
+GivenStories: stories/partner/onboard_partner.story
+
+Given a service partner enabled end user submits a money transfer
 And the end user's email is goldman@bank.com
 And the end user's phone number is 911
 And the receiving user is identified by EMAIL
@@ -16,7 +18,8 @@ And the transfer is in USD
 And the transfer amount is 120.00
 And the transfer is due to be retrieved in 5 days
 
-When the service partner sends a request to the money transfer service to submit the transfer
+When the service partner sends a request to the service API gateway to submit the transfer
+And the service API GW forwards the request to the money transfer service
 
 Then the money transfer service sends a response
 And the response status is 201

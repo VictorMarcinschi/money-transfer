@@ -103,7 +103,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"partnerIdentifier\" : \"ONSHORBANK\",\n  \"senderDetails\" : {\n    \"email\" : \"goldman@bank.com\",\n    \"phone\" : \"911\"\n  },\n  \"receiverAttribute\" : \"EMAIL\",\n  \"receiver\" : \"sachs@bank.com\",\n  \"currencyCode\" : \"USD\",\n  \"amount\" : 120.00,\n  \"retrievalExpiry\" : \"2020-02-14\"\n}",
+					"raw": "{\n  \"partnerIdentifier\" : \"{{SERVICE_PARTNER}}\",\n  \"senderDetails\" : {\n    \"email\" : \"goldman@bank.com\",\n    \"phone\" : \"911\"\n  },\n  \"receiverAttribute\" : \"EMAIL\",\n  \"receiver\" : \"sachs@bank.com\",\n  \"currencyCode\" : \"USD\",\n  \"amount\" : 120.00,\n  \"retrievalExpiry\" : \"2020-02-14\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -239,25 +239,25 @@
 	],
 	"variable": [
 		{
-			"id": "c19474b2-8571-4c78-ad36-abeda72c8c57",
+			"id": "a072632f-3906-4f37-a3ff-f55b9e974c98",
 			"key": "SENDER_IDENTIFIER",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "a1929443-50c7-4bd1-99a4-c5924c09b423",
+			"id": "72165604-f009-4b53-8b13-595e5cf43c61",
 			"key": "TRANSFER_IDENTIFIER",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "05e57338-6822-47b1-af1a-be5620854006",
+			"id": "852fc40d-1301-4c45-92bd-f72caba3245d",
 			"key": "CONFIRMATION_CODE",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "33d2d7d9-d492-4dc4-ac34-9b007f38dfc0",
+			"id": "4666d51b-d79c-4923-a536-d04defa8a218",
 			"key": "SERVICE_PARTNER",
 			"value": "ONSHORBANK",
 			"type": "string"

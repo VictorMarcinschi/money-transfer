@@ -43,6 +43,10 @@
         this.receivingUserId = User.id
     </Relationship>
 
+    <Relationship name="retrievals" relatedObject="Retrieval" cardinality="one-to-many" relatedIsDependent="true" reverseRelationshipName="transfer">
+        this.id = Retrieval.transferId
+    </Relationship>
+
     <Index name="uqTransfer" unique="true">identifier</Index>
 
 </MithraObject>

@@ -35,6 +35,6 @@ class ReladomoUserRepository implements UserRepository {
 
     @Override
     public void create(User user) {
-        user.insert();
+        user.cascadeInsert();
     }
 }

@@ -1,5 +1,7 @@
 package transfer.user.model;
 
+import transfer.user.rest.EndUserDetails;
+
 import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -8,7 +10,7 @@ import java.util.UUID;
 
 public class User extends UserAbstract {
 
-    User() {
+    public User() {
         super();
         // You must not modify this constructor. Mithra calls this internally.
         // You can call this constructor. You can also add new constructors.
@@ -33,5 +35,9 @@ public class User extends UserAbstract {
 
     public UUID getUUIDIdentifier() {
         return UUID.fromString(getIdentifier());
+    }
+
+    public void updateDetails(EndUserDetails newDetails, ZonedDateTime now) {
+        getUserDetails().updateFrom(newDetails, now);
     }
 }

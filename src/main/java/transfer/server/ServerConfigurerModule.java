@@ -7,12 +7,14 @@ import javax.inject.Named;
 import dagger.Module;
 import dagger.Provides;
 import transfer.config.properties.ApplicationPropertiesModule;
+import transfer.moneytransfer.rest.TransferModule;
 import transfer.partner.rest.ServicePartnerModule;
 import transfer.rest.RestModule;
 
 import static transfer.config.properties.ApplicationProperties.SERVER_PORT;
 
-@Module(includes = {ApplicationPropertiesModule.class, RestModule.class, ServicePartnerModule.class})
+@Module(includes = {ApplicationPropertiesModule.class, RestModule.class, ServicePartnerModule.class,
+        TransferModule.class})
 class ServerConfigurerModule {
 
     @Provides

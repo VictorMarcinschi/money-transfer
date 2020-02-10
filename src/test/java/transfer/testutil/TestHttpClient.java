@@ -11,7 +11,7 @@ import transfer.config.properties.ApplicationPropertiesModule;
 public class TestHttpClient {
 
     private static final MediaType JSON = MediaType.get("application/json");
-    private static final String ROOT_URL = "http://localhost:8080";
+    private static final String ROOT_URL = "http://localhost:9090";
 
     private final OkHttpClient client;
     private final ObjectMapper mapper;

@@ -3,7 +3,6 @@ package transfer.moneytransfer.rest;
 import lombok.RequiredArgsConstructor;
 import transfer.domain.Command;
 import transfer.domain.CommandResult;
-import transfer.moneytransfer.model.Transfer;
 import transfer.moneytransfer.service.TransferService;
 import transfer.partner.model.ServicePartner;
 import transfer.partner.repository.ServicePartnerRepository;

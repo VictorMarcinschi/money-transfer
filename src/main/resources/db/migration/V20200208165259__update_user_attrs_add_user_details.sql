@@ -12,17 +12,6 @@ alter table users
         unique (identifier);
 
 alter table users
-    add column confirmed boolean not null;
-
-alter table users
-    add column confirming_partner_id int not null;
-
-alter table users
-    add constraint fk_users_service_partners
-        foreign key (confirming_partner_id)
-            references service_partners (id);
-
-alter table users
     add column created_at timestamp not null default now();
 
 alter table users

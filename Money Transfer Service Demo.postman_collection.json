@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "7b8b26fc-0bb8-4da6-9fea-c4d71047ac65",
+		"name": "Money Transfer Service Demo",
+		"description": "Demo of the Money Transfer Service implemented as part of the job interview task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Onboard Service Partner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "057e8779-34de-4ff9-84ff-eb4c4b9a6d50",
+						"exec": [
+							"pm.test(\"the response status is 201\", function() {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"the response body is the identifier of the partner from the sent request\",",
+							"    function() {",
+							"        pm.response.to.have.body('\"' + pm.collectionVariables.get(\"SERVICE_PARTNER\") + '\"');",
+							"    });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"identifier\": \"{{SERVICE_PARTNER}}\",\n\t\"kycExpiry\": \"2020-05-01\",\n\t\"apiBasePath\": \"http://localhost:9090\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/partners",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"partners"
+					]
+				},
+				"description": "Notify the money transfer service about the onboarding of a new partner\n\nNarrative:\nIn order to enable a partner to submit money transfers from end users\nAs a partner onboarding processor\nI want to register a newly onboarded partner with the money transfer service\n\nScenario: A new partner has completed the onboarding process and is registered with the money transfer service\nGiven the onboarding processor completes the onboarding of a new partner\nAnd assigns it the identifier MANIFORPPL\nAnd the partner's KYC profile expires in 6 months\nAnd the partner specifies its API base path at https://transfers.maniforppl.com/api\n\nWhen the onboarding processor sends a request to the money transfer service to register the partner\n\nThen the money transfer service sends a response\nAnd the response status is 201\nAnd the response body is the identifier of the partner from the sent request"
+			},
+			"response": []
+		},
+		{
+			"name": "Submit Money Transfer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8526b5c5-ddfc-4be8-bfd6-83e683d22c62",
+						"exec": [
+							"var body = pm.response.json();",
+							"pm.test(\"the money transfer service sends a response\", function() {",
+							"    pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"the response status is 201\", function() {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"the response body contains the sending end user's identifier assigned by the service\", function() {",
+							"    ",
+							"    pm.expect(body).to.have.property('senderIdentifier');",
+							"    pm.expect(body.senderIdentifier).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"the response body contains an identifier for the submitted transfer\", function() {",
+							"    ",
+							"    pm.expect(body).to.have.property('transferIdentifier');",
+							"    pm.expect(body.transferIdentifier).to.not.be.empty;",
+							"})",
+							"",
+							"pm.collectionVariables.set(\"TRANSFER_IDENTIFIER\", body.transferIdentifier);",
+							"pm.collectionVariables.set(\"SENDER_IDENTIFIER\", body.senderIdentifier);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"partnerIdentifier\" : \"ONSHORBANK\",\n  \"senderDetails\" : {\n    \"email\" : \"goldman@bank.com\",\n    \"phone\" : \"911\"\n  },\n  \"receiverAttribute\" : \"EMAIL\",\n  \"receiver\" : \"sachs@bank.com\",\n  \"currencyCode\" : \"USD\",\n  \"amount\" : 120.00,\n  \"retrievalExpiry\" : \"2020-02-14\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transfers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfers"
+					]
+				},
+				"description": "Service partner submits a money transfer on behalf of an end user onboarded in its systems\n\nNarrative:\nIn order to enable end users to submit money transfers\nAs a service partner\nI want to be able to forward money transfer request to the money transfer service\n\nScenario: An end user submits a money transfer via one of the onboarded service partners\nGiven the service partner ONSHORBANK has been onboarded successfully\nAnd a service partner enabled end user submits a money transfer\nAnd the end user's email is goldman@bank.com\nAnd the end user's phone number is 911\nAnd the receiving user is identified by EMAIL\nAnd the receiving user's identifier is sachs@bank.com\nAnd the transfer is in USD\nAnd the transfer amount is 120.00\nAnd the transfer is due to be retrieved in 5 days\n\nWhen the service partner sends a request to the money transfer service to submit the transfer\n\nThen the money transfer service sends a response\nAnd the response status is 201\nAnd the response body contains the sending end user's identifier assigned by the service\nAnd the response body contains an identifier for the submitted transfer"
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Money Transfer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f1783772-abc9-42fa-8415-6f0f4270901b",
+						"exec": [
+							"pm.collectionVariables.set(\"CONFIRMATION_CODE\", pm.response.json().confirmationCode);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"partnerIdentifier\": \"{{SERVICE_PARTNER}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transfers/{{TRANSFER_IDENTIFIER}}/retrievals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfers",
+						"{{TRANSFER_IDENTIFIER}}",
+						"retrievals"
+					]
+				},
+				"description": "Submit a Money Transfer request to send money from one user to another."
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Money Transfer Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"receiverDetails\": {\n\t\t\"email\": \"sachs@bank.com\",\n\t\t\"phone\": \"112\"\n\t},\n\t\"confirmationCode\": \"{{CONFIRMATION_CODE}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transfers/{{TRANSFER_IDENTIFIER}}/retrievals/{{SERVICE_PARTNER}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfers",
+						"{{TRANSFER_IDENTIFIER}}",
+						"retrievals",
+						"{{SERVICE_PARTNER}}"
+					]
+				},
+				"description": "Submit a Money Transfer request to send money from one user to another."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e3838b45-b614-4805-a051-4c6e4b4e1e7b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b70f3686-431f-458b-b59e-7bf501d74428",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "c19474b2-8571-4c78-ad36-abeda72c8c57",
+			"key": "SENDER_IDENTIFIER",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "a1929443-50c7-4bd1-99a4-c5924c09b423",
+			"key": "TRANSFER_IDENTIFIER",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "05e57338-6822-47b1-af1a-be5620854006",
+			"key": "CONFIRMATION_CODE",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "33d2d7d9-d492-4dc4-ac34-9b007f38dfc0",
+			"key": "SERVICE_PARTNER",
+			"value": "ONSHORBANK",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,13 +1,13 @@
 package transfer;
 
-import org.jbehave.core.annotations.AfterStory;
-import org.jbehave.core.annotations.BeforeStory;
+import org.jbehave.core.annotations.AfterStories;
+import org.jbehave.core.annotations.BeforeStories;
 import spark.Spark;
 import transfer.config.DaggerSystemClockFactory;
 
 public class LifecycleSteps {
 
-    @BeforeStory
+    @BeforeStories
     public void startApplication() {
         DaggerMoneyTransferAppFactory.builder()
                 .moneyTransferAppModule(new MoneyTransferAppModule("application.properties"))
@@ -19,7 +19,7 @@ public class LifecycleSteps {
         Spark.awaitInitialization();
     }
 
-    @AfterStory
+    @AfterStories
     public void stopApplication() {
         Spark.stop();
         Spark.awaitStop();

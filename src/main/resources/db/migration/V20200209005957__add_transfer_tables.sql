@@ -35,7 +35,7 @@ create table retrievals (
     status varchar(20) not null,
     confirmation_code char(6) not null,
     confirmation_expiry timestamp not null,
-    confirmed_at timestamp not null,
+    confirmed_at timestamp,
     created_at timestamp not null,
     updated_at timestamp not null,
 

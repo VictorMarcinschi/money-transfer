@@ -10,6 +10,6 @@ class ClockModule {
 
     @Provides
     static Clock provideSystemClock() {
-        return Clock.systemDefaultZone();
+        return Clock.systemUTC();
     }
 }

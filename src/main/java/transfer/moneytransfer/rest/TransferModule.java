@@ -20,12 +20,15 @@ import transfer.user.service.UserService;
 import transfer.user.service.UserServiceModule;
 
 import javax.inject.Named;
+import java.time.Clock;
 
 @Module(includes = {RestModule.class, TransferRepositoryModule.class, ServicePartnerRepositoryModule.class,
         UserRepositoryModule.class, UserServiceModule.class, TransferServiceModule.class})
 public class TransferModule {
 
     private static final String COMMAND_SUBMIT = "submitTransferCommand";
+    private static final String COMMAND_RETRIEVE = "retrieveTransferCommand";
+    private static final String COMMAND_CONFIRM = "confirmRetrievalCommand";
 
     @Provides
     @IntoSet
@@ -36,9 +39,11 @@ public class TransferModule {
 
     @Provides
     static TransferController provideTransferController(
-            @Named(COMMAND_SUBMIT)Command<SubmitTransferRequest, SubmitTransferResponse> submitCommand) {
+            @Named(COMMAND_SUBMIT) Command<SubmitTransferRequest, SubmitTransferResponse> submitCommand,
+            @Named(COMMAND_RETRIEVE) Command<RetrieveTransferRequest, RetrieveTransferResponse> retrieveCommand,
+            @Named(COMMAND_CONFIRM) Command<ConfirmRetrievalRequest, ConfirmRetrievalResponse> confirmCommand) {
 
-        return new TransferController(submitCommand);
+        return new TransferController(submitCommand, retrieveCommand, confirmCommand);
     }
 
     @Provides
@@ -50,6 +55,24 @@ public class TransferModule {
             TransferService transferService) {
 
         var command = new SubmitTransferCommand(servicePartnerRepository, userRepository, userService, transferService);
+        return new TransactionalCommand<>(command);
+    }
+
+    @Provides
+    @Named(COMMAND_RETRIEVE)
+    static Command<RetrieveTransferRequest, RetrieveTransferResponse> provideRetrieveCommand(
+            ServicePartnerRepository partnerRepository, TransferService transferService) {
+
+        var command = new RetrieveTransferCommand(partnerRepository, transferService);
+        return new TransactionalCommand<>(command);
+    }
+
+    @Provides
+    @Named(COMMAND_CONFIRM)
+    static Command<ConfirmRetrievalRequest, ConfirmRetrievalResponse> provideConfirmCommand(
+            TransferService transferService, ServicePartnerRepository partnerRepository, Clock systemClock) {
+
+        var command = new ConfirmRetrievalCommand(transferService, partnerRepository, systemClock);
         return new TransactionalCommand<>(command);
     }
 }

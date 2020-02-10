@@ -1,22 +1,20 @@
 package transfer.moneytransfer.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
-@Builder
 @Getter
 @ToString
-class SubmitTransferResponse {
+class RetrieveTransferRequest {
+
+    @Setter(AccessLevel.PACKAGE)
+    private String transferIdentifier;
 
     @JsonProperty
-    private final UUID senderIdentifier;
-
-    @JsonProperty
-    private final String transferIdentifier;
+    private final String partnerIdentifier;
 }

@@ -3,7 +3,7 @@ Service partner submits a money transfer on behalf of an end user onboarded in i
 Narrative:
 In order to enable end users to submit money transfers
 As a service partner
-I want to be able to forward money transfer request to the money transfer service
+I want to be able to forward money transfer requests to the money transfer service
 
 Scenario: An end user submits a money transfer via one of the onboarded service partners
 Given the service partner ONSHORBANK has been onboarded successfully

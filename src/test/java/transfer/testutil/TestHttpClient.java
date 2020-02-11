@@ -2,6 +2,7 @@ package transfer.testutil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,11 +26,13 @@ public class TestHttpClient {
     }
 
     @SneakyThrows
-    public <REQ, RES> TestHttpResponse<RES> post(String relativeUrl, REQ request, Class<RES> responseType) {
+    public <REQ, RES> TestHttpResponse<RES> post(String relativeUrl, REQ request, Class<RES> responseType,
+            Object... pathParams) {
+
         var body = RequestBody.create(mapper.writeValueAsString(request), JSON);
 
         var httpRequest = new Request.Builder()
-                .url(ROOT_URL + relativeUrl)
+                .url(ROOT_URL + String.format(relativeUrl, pathParams))
                 .post(body)
                 .build();
 

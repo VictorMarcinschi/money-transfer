@@ -7,17 +7,17 @@ I want to be able to forward retrieval requests to the money transfer service
 
 Scenario: An end user wants to retrieve a money transfer via one of the onboarded service partners
 
-GivenStories: stories/partner/submit_transfer.story
+GivenStories: stories/transfer/submit_transfer.story
 
-Given a new service partner OFFSHRBANK is onboarded for 1 month with the API at http://offshore.pn/api
+Given a new service partner OFFSHRBANK is onboarded for 1 months with the API at http://offshore.pn/api
 And one if its end user submits a retrieval for a transfer
 
-When the service partner forwards the request to the service API gateway
-And the service API GW forwards the request to the money transfer service
+When the service partner forwards the retrieve transfer request to the service API gateway
+And the service API GW forwards the retrieve transfer request to the money transfer service
 
-Then the money transfer service sends a response
-And the response status is 201
-And it contains a timestamp representing the retrieval confirmation due by time
+Then the money transfer service sends a retrieve transfer response
+And the retrieve transfer response status is 201
+And it contains a timestamp representing the retrieval confirmation due by time set in the future
 And it contains a secret code to use for retrieval confirmation
 And it contains the secret code delivery method
-And it contains the end user requisite that matches the one in the submitted transfer
+And it contains the receiving user requisite that matches the one in the submitted transfer

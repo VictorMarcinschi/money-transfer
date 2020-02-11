@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OnboardPartnerSteps {
 
-    private static final String REGISTER_URL = "/partners";
+    protected static final String REGISTER_PARTNER_URL = "/partners";
 
     protected TestHttpClient client;
 
@@ -24,9 +24,12 @@ public class OnboardPartnerSteps {
 
     protected TestHttpResponse<String> onboardPartnerResponse;
 
+    public OnboardPartnerSteps() {
+        client = new TestHttpClient();
+    }
+
     @Given("the onboarding processor completes the onboarding of a new partner")
     public void givenPartnerOnboardingComplete() {
-        client = new TestHttpClient();
     }
 
     @Given("assigns it the identifier $parnerIdentifier")
@@ -46,13 +49,18 @@ public class OnboardPartnerSteps {
 
     @When("the onboarding processor sends a request to the money transfer service to register the partner")
     public void whenRegisterRequestSent() {
-        var request = RegisterServicePartnerRequest.builder()
+        var request = createRegsiterServicePartnerRequest(partnerIdentifier, kycValidityMonths, apiBasePath);
+        onboardPartnerResponse = client.post(REGISTER_PARTNER_URL, request, String.class);
+    }
+
+    protected static RegisterServicePartnerRequest createRegsiterServicePartnerRequest(String partnerIdentifier,
+            int kycValidityMonths, String apiBasePath) {
+
+        return RegisterServicePartnerRequest.builder()
                 .identifier(partnerIdentifier)
                 .kycExpiry(LocalDate.now().plusMonths(kycValidityMonths))
                 .apiBasePath(apiBasePath)
                 .build();
-
-        onboardPartnerResponse = client.post(REGISTER_URL, request, String.class);
     }
 
     @Then("the money transfer service sends a onboard partner response")

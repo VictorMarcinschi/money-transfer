@@ -73,14 +73,14 @@ public class SubmitTransferSteps extends OnboardPartnerSteps {
                 .build();
     }
     
-    @When("the service API GW forwards the request to the money transfer service")
+    @When("the service API GW forwards the submit transfer request to the money transfer service")
     public void whenSubmitTransferRequestSent() {
         submitTransferResponse = client.post(SUBMIT_TRANSFER_URL, request, SubmitTransferResponse.class);
     }
 
     @Then("the money transfer service sends a submit transfer response")
     public void thenSubmitTransferResponse() {
-        assertThat(submitTransferResponse).isNotNull();
+        assertThat(submitTransferResponse.getRawResponse()).isNotNull();
         assertThat(submitTransferResponse.getResponse()).isNotNull();
     }
 

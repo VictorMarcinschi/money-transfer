@@ -18,7 +18,7 @@ And the receiving user's identifier is sachs@bank.com
 And the transfer is due to be retrieved in 5 days
 
 When the service partner sends a request to the service API gateway to submit the transfer
-And the service API GW forwards the request to the money transfer service
+And the service API GW forwards the submit transfer request to the money transfer service
 
 Then the money transfer service sends a submit transfer response
 And the submit transfer response status is 201

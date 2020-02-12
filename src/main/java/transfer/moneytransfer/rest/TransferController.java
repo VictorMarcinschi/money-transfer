@@ -1,11 +1,11 @@
 package transfer.moneytransfer.rest;
 
+import java.time.Clock;
+import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
-import spark.Request;
 import transfer.domain.Command;
 import transfer.rest.RestResponse;
-
-import java.util.Map;
 
 @RequiredArgsConstructor
 class TransferController {
@@ -16,28 +16,23 @@ class TransferController {
     private final Command<SubmitTransferRequest, SubmitTransferResponse> submitTransferCommand;
     private final Command<RetrieveTransferRequest, RetrieveTransferResponse> retrieveTransferCommand;
     private final Command<ConfirmRetrievalRequest, ConfirmRetrievalResponse> confirmRetrievalCommand;
+    private final Clock systemClock;
 
-    RestResponse submitTransfer(SubmitTransferRequest transferRequest, Request request) {
-        var result = submitTransferCommand.execute(transferRequest);
-        return RestResponse.builderFrom(result, 201)
-                .location(request.matchedPath() + "/" + result.getValue().getTransferIdentifier())
-                .build();
+    RestResponse submitTransfer(SubmitTransferRequest transferRequest) {
+        var result = submitTransferCommand.execute(transferRequest, systemClock);
+        return RestResponse.from(result, 201);
     }
 
-    RestResponse retrieveTransfer(RetrieveTransferRequest retrieveRequest, Map<String, String> params,
-            Request request) {
-
+    RestResponse retrieveTransfer(RetrieveTransferRequest retrieveRequest, Map<String, String> params) {
         retrieveRequest.setTransferIdentifier(params.get(PARAM_TRANSFER_IDENTIFIER));
-        var result = retrieveTransferCommand.execute(retrieveRequest);
-        return RestResponse.builderFrom(result, 201)
-                .location(request.matchedPath() + "/" + retrieveRequest.getPartnerIdentifier())
-                .build();
+        var result = retrieveTransferCommand.execute(retrieveRequest, systemClock);
+        return RestResponse.from(result, 201);
     }
 
     RestResponse confirmRetrieval(ConfirmRetrievalRequest confirmRequest, Map<String, String> params) {
         confirmRequest.setTransferIdentifier(params.get(PARAM_TRANSFER_IDENTIFIER));
         confirmRequest.setPartnerIdentifier(params.get(PARAM_PARTNER_IDENTIFIER));
-        var result = confirmRetrievalCommand.execute(confirmRequest);
-        return RestResponse.builderFrom(result, 202).build();
+        var result = confirmRetrievalCommand.execute(confirmRequest, systemClock);
+        return RestResponse.from(result, 202);
     }
 }

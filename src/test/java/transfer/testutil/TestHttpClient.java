@@ -1,8 +1,8 @@
 package transfer.testutil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.SneakyThrows;
-import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,7 +36,26 @@ public class TestHttpClient {
                 .post(body)
                 .build();
 
-        try (var response = client.newCall(httpRequest).execute()) {
+        return executeCall(httpRequest, responseType);
+    }
+
+    @SneakyThrows
+    public <REQ, RES> TestHttpResponse<RES> patch(String relativeUrl, REQ request, Class<RES> responseType,
+            Object... pathParams) {
+
+        var body = RequestBody.create(mapper.writeValueAsString(request), JSON);
+
+        var httpRequest = new Request.Builder()
+                .url(ROOT_URL + String.format(relativeUrl, pathParams))
+                .patch(body)
+                .build();
+
+        return executeCall(httpRequest, responseType);
+    }
+
+    @SneakyThrows
+    private <REQ, RES> TestHttpResponse<RES> executeCall(Request request, Class<RES> responseType) {
+        try (var response = client.newCall(request).execute()) {
             return new TestHttpResponse<>(response, mapper.readValue(response.body().string(), responseType));
         }
     }

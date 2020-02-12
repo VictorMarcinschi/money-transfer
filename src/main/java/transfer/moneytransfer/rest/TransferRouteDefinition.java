@@ -19,14 +19,14 @@ class TransferRouteDefinition implements SparkRouteDefinition {
     public void define() {
         post("/transfers",
                 new HandlerRoute(new JsonDeserializingHandler<>(
-                        (dr, p, r) -> controller.submitTransfer(dr, r),
+                        (dr, p, r) -> controller.submitTransfer(dr),
                         mapper,
                         SubmitTransferRequest.class)),
                 mapper::writeValueAsString);
 
         post("/transfers/:transferIdentifier/retrievals",
                 new HandlerRoute(new JsonDeserializingHandler<>(
-                        (dr, p, r) -> controller.retrieveTransfer(dr, p, r),
+                        (dr, p, r) -> controller.retrieveTransfer(dr, p),
                         mapper,
                         RetrieveTransferRequest.class)),
                 mapper::writeValueAsString);

@@ -1,13 +1,13 @@
 package transfer.server;
 
 import java.util.Collection;
-import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-import static spark.Spark.notFound;
 import static spark.Spark.port;
 
+@Slf4j
 @RequiredArgsConstructor
 class SparkServerConfigurer implements ServerConfigurer {
 

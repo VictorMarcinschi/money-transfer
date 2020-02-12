@@ -12,8 +12,11 @@
     <Attribute name="identifier" javaType="String" columnName="identifier" nullable="false" maxLength="10"/>
     <Attribute name="kycExpiry" javaType="Date" columnName="kyc_expiry" nullable="false"/>
     <Attribute name="apiBasePath" javaType="String" columnName="api_base_path" nullable="false" maxLength="1024"/>
-    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
-    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
+    <Attribute name="createdAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="created_at"
+               nullable="false" readonly="true"/>
+
+    <Attribute name="updatedAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="updated_at"
+               nullable="false"/>
 
     <Index name="uqServicePartner" unique="true">identifier</Index>
 </MithraObject>

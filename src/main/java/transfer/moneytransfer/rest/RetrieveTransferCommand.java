@@ -14,10 +14,9 @@ class RetrieveTransferCommand implements Command<RetrieveTransferRequest, Retrie
 
     private final ServicePartnerRepository servicePartnerRepository;
     private final TransferService transferService;
-    private final Clock systemClock;
 
     @Override
-    public CommandResult<RetrieveTransferResponse> execute(RetrieveTransferRequest request) {
+    public CommandResult<RetrieveTransferResponse> execute(RetrieveTransferRequest request, Clock systemClock) {
         var partner = servicePartnerRepository.findByIdentifier(request.getPartnerIdentifier()).get();
         var retrieval = transferService.retrieveTransfer(request.getTransferIdentifier(), partner);
 

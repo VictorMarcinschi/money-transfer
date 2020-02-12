@@ -23,10 +23,9 @@ class SubmitTransferCommand implements Command<SubmitTransferRequest, SubmitTran
     private final UserRepository userRepository;
     private final UserService userService;
     private final TransferService transferService;
-    private final Clock systemClock;
 
     @Override
-    public CommandResult<SubmitTransferResponse> execute(SubmitTransferRequest request) {
+    public CommandResult<SubmitTransferResponse> execute(SubmitTransferRequest request, Clock systemClock) {
         var partner = resolveServicePartner(request);
         var sender = resolveSender(request);
         var receiver = resolveReceiver(request);

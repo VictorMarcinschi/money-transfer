@@ -53,4 +53,11 @@ public class RestModule {
     static SparkRouteDefinition provideErrorRouteDefinition(ObjectMapper mapper) {
         return new ErrorRouteDefinition(mapper);
     }
+
+    @Provides
+    @IntoSet
+    @RouteDefinition
+    static SparkRouteDefinition provideLoggingRouteDefinition() {
+        return new LoggingRouteDefinition();
+    }
 }

@@ -19,13 +19,11 @@ public class JsonDeserializingHandler<R> implements Handler {
 
     @Override
     public RestResponse handle(Request request) {
-        log.info("Received request with body\n{}", request.body());
         var deserializedRequest = deserializeBody(request.body());
-        return deserializedRequest.map(r -> handler.handle(r, request.params(), request))
-                .orElse(RestResponse.builder()
-                        .status(400)
-                        .body("Could not understand request body")
-                        .build());
+        var restResponse = deserializedRequest.map(r -> handler.handle(r, request.params(), request))
+                .orElse(new RestResponse(400, "Could not understand request body"));
+
+        return restResponse;
     }
 
     private Optional<R> deserializeBody(String body) {

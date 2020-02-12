@@ -28,8 +28,11 @@
 
     <Attribute name="status" javaType="String" columnName="status" nullable="false" maxLength="20"/>
     <Attribute name="retrievalExpiry" javaType="Date" columnName="retrieval_expiry" nullable="false" readonly="true"/>
-    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
-    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
+    <Attribute name="createdAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="created_at"
+               nullable="false" readonly="true"/>
+
+    <Attribute name="updatedAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="updated_at"
+               nullable="false"/>
 
     <Relationship name="sendingServicePartner" relatedObject="ServicePartner" cardinality="many-to-one">
         this.sendingServicePartnerId = ServicePartner.id

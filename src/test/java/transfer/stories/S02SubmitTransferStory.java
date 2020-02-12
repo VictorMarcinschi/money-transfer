@@ -1,10 +1,10 @@
-package transfer.partner.stories;
+package transfer.stories;
 
 import transfer.LifecycleSteps;
 import transfer.jbehave.AbstractStory;
 import transfer.moneytransfer.rest.SubmitTransferSteps;
 
-public class SubmitTransferStory extends AbstractStory {
+public class S02SubmitTransferStory extends AbstractStory {
 
     @Override
     public Object[] steps() {

@@ -16,10 +16,9 @@ class ConfirmRetrievalCommand implements Command<ConfirmRetrievalRequest, Confir
 
     private final TransferService transferService;
     private final ServicePartnerRepository servicePartnerRepository;
-    private final Clock systemClock;
 
     @Override
-    public CommandResult<ConfirmRetrievalResponse> execute(ConfirmRetrievalRequest request) {
+    public CommandResult<ConfirmRetrievalResponse> execute(ConfirmRetrievalRequest request, Clock systemClock) {
         var partner = servicePartnerRepository.findByIdentifier(request.getPartnerIdentifier()).get();
         var retrieval = transferService.confirmRetrieval(request.getTransferIdentifier(),
                 request.getConfirmationCode(), partner);

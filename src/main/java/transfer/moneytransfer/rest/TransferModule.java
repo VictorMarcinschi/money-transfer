@@ -41,9 +41,10 @@ public class TransferModule {
     static TransferController provideTransferController(
             @Named(COMMAND_SUBMIT) Command<SubmitTransferRequest, SubmitTransferResponse> submitCommand,
             @Named(COMMAND_RETRIEVE) Command<RetrieveTransferRequest, RetrieveTransferResponse> retrieveCommand,
-            @Named(COMMAND_CONFIRM) Command<ConfirmRetrievalRequest, ConfirmRetrievalResponse> confirmCommand) {
+            @Named(COMMAND_CONFIRM) Command<ConfirmRetrievalRequest, ConfirmRetrievalResponse> confirmCommand,
+            Clock systemClock) {
 
-        return new TransferController(submitCommand, retrieveCommand, confirmCommand);
+        return new TransferController(submitCommand, retrieveCommand, confirmCommand, systemClock);
     }
 
     @Provides
@@ -52,11 +53,10 @@ public class TransferModule {
             ServicePartnerRepository servicePartnerRepository,
             UserRepository userRepository,
             UserService userService,
-            TransferService transferService,
-            Clock systemClock) {
+            TransferService transferService) {
 
         var command = new SubmitTransferCommand(servicePartnerRepository, userRepository, userService,
-                transferService, systemClock);
+                transferService);
 
         return new TransactionalCommand<>(command);
     }
@@ -64,18 +64,18 @@ public class TransferModule {
     @Provides
     @Named(COMMAND_RETRIEVE)
     static Command<RetrieveTransferRequest, RetrieveTransferResponse> provideRetrieveCommand(
-            ServicePartnerRepository partnerRepository, TransferService transferService, Clock systemClock) {
+            ServicePartnerRepository partnerRepository, TransferService transferService) {
 
-        var command = new RetrieveTransferCommand(partnerRepository, transferService, systemClock);
+        var command = new RetrieveTransferCommand(partnerRepository, transferService);
         return new TransactionalCommand<>(command);
     }
 
     @Provides
     @Named(COMMAND_CONFIRM)
     static Command<ConfirmRetrievalRequest, ConfirmRetrievalResponse> provideConfirmCommand(
-            TransferService transferService, ServicePartnerRepository partnerRepository, Clock systemClock) {
+            TransferService transferService, ServicePartnerRepository partnerRepository) {
 
-        var command = new ConfirmRetrievalCommand(transferService, partnerRepository, systemClock);
+        var command = new ConfirmRetrievalCommand(transferService, partnerRepository);
         return new TransactionalCommand<>(command);
     }
 }

@@ -32,17 +32,15 @@ public class ServicePartnerModule {
 
     @Provides
     static ServicePartnerController provideServicePartnerController(
-            @Named(COMMAND_ONBOARD) Command<RegisterServicePartnerRequest, String> onboardCommand) {
+            @Named(COMMAND_ONBOARD) Command<RegisterServicePartnerRequest, String> onboardCommand, Clock systemClock) {
 
-        return new ServicePartnerController(onboardCommand);
+        return new ServicePartnerController(onboardCommand, systemClock);
     }
 
     @Provides
     @Named(COMMAND_ONBOARD)
-    static Command<RegisterServicePartnerRequest, String> onboardCommand(ServicePartnerRepository repository,
-            Clock systemClock) {
-
-        var command = new RegisterServicePartnerCommand(repository, systemClock);
+    static Command<RegisterServicePartnerRequest, String> onboardCommand(ServicePartnerRepository repository) {
+        var command = new RegisterServicePartnerCommand(repository);
         return new TransactionalCommand<>(command);
     }
 }

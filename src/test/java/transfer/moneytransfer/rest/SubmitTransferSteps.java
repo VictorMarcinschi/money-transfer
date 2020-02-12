@@ -18,58 +18,58 @@ public class SubmitTransferSteps extends OnboardPartnerSteps {
 
     private static final String SUBMIT_TRANSFER_URL = "/transfers";
 
-    protected String senderEmail;
-    protected String senderPhone;
-    protected String currencyCode;
-    protected BigDecimal amount;
-    protected UserAttribute receiverAttribute;
-    protected String receiverIdentifier;
-    protected LocalDate retrievalExpiry;
+    protected String submitTransferSenderEmail;
+    protected String submitTransferSenderPhone;
+    protected String submitTransferCurrencyCode;
+    protected BigDecimal submitTransferAmount;
+    protected UserAttribute submitTransferReceiverAttribute;
+    protected String submitTransferReceiverIdentifier;
+    protected LocalDate submitTransferRetrievalExpiry;
 
     private SubmitTransferRequest request;
     protected TestHttpResponse<SubmitTransferResponse> submitTransferResponse;
 
     @Given("an end user with the email address $email and phone number $phone submits a money transfer")
     public void givenSenderEmail(@Named("email") String email, @Named("phone") String phone) {
-        this.senderEmail = email;
-        this.senderPhone = phone;
+        this.submitTransferSenderEmail = email;
+        this.submitTransferSenderPhone = phone;
     }
 
     @Given("the transfer is in $currencyCode")
     public void givenTransferCurrency(@Named("currencyCode") String currencyCode) {
-        this.currencyCode = currencyCode;
+        this.submitTransferCurrencyCode = currencyCode;
     }
 
     @Given("the transfer amount is $amount")
     public void givenTransferAmount(@Named("amount") BigDecimal amount) {
-        this.amount = amount;
+        this.submitTransferAmount = amount;
     }
 
     @Given("the receiving user is identified by $attribute")
     public void givenReceiverAttribute(@Named("attribute") UserAttribute attribute) {
-        this.receiverAttribute = attribute;
+        this.submitTransferReceiverAttribute = attribute;
     }
 
     @Given("the receiving user's identifier is $email")
     public void givenReceiverIdentifier(@Named("email") String email) {
-        this.receiverIdentifier = email;
+        this.submitTransferReceiverIdentifier = email;
     }
 
     @Given("the transfer is due to be retrieved in $days days")
     public void givenTransferValidity(@Named("days") int days) {
-        this.retrievalExpiry = LocalDate.now().plusDays(days);
+        this.submitTransferRetrievalExpiry = LocalDate.now().plusDays(days);
     }
 
     @When("the service partner sends a request to the service API gateway to submit the transfer")
     public void whenSubmitTransferRequest() {
         request = SubmitTransferRequest.builder()
                 .partnerIdentifier(partnerIdentifier)
-                .senderDetails(new EndUserDetails(senderEmail, senderPhone))
-                .receiverAttribute(receiverAttribute)
-                .receiver(receiverIdentifier)
-                .currencyCode(currencyCode)
-                .amount(amount)
-                .retrievalExpiry(retrievalExpiry)
+                .senderDetails(new EndUserDetails(submitTransferSenderEmail, submitTransferSenderPhone))
+                .receiverAttribute(submitTransferReceiverAttribute)
+                .receiver(submitTransferReceiverIdentifier)
+                .currencyCode(submitTransferCurrencyCode)
+                .amount(submitTransferAmount)
+                .retrievalExpiry(submitTransferRetrievalExpiry)
                 .build();
     }
     
@@ -110,20 +110,20 @@ public class SubmitTransferSteps extends OnboardPartnerSteps {
         assertThat(submitTransferResponse.getResponse())
                 .extracting(r -> r.getRetrievalDueBy())
                 .usingDefaultComparator()
-                .isEqualTo(retrievalExpiry);
+                .isEqualTo(submitTransferRetrievalExpiry);
     }
 
     @Then("it contains a notification-via attribute matching the receiving user's identifying attribute from the request")
     public void thenSubmitTransferResponseHasNotificationViaAsReceiverInRequest() {
         assertThat(submitTransferResponse.getResponse())
                 .extracting(r -> r.getSendNotificationVia())
-                .isSameAs(receiverAttribute);
+                .isSameAs(submitTransferReceiverAttribute);
     }
 
     @Then("it contains a notification-to identifier matching the receiving user's identifier from the request")
     public void thenSubmitTransferResponseHasNotificationToAsReceiverInRequest() {
         assertThat(submitTransferResponse.getResponse())
                 .extracting(r -> r.getSendNotificationTo())
-                .isEqualTo(receiverIdentifier);
+                .isEqualTo(submitTransferReceiverIdentifier);
     }
 }

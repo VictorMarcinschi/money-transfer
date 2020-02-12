@@ -1,12 +1,14 @@
 package transfer.moneytransfer.rest;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import transfer.testutil.TestHttpResponse;
 
-import java.time.LocalDateTime;
+import transfer.testutil.TestHttpResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,6 +18,7 @@ public class RetrieveTransferSteps extends SubmitTransferSteps {
 
     protected Object registerReceiverServicePartnerRequest;
     protected String receiverPartnerIdentifier;
+    protected String retrieveTransferApiBasePath;
 
     private RetrieveTransferRequest request;
 
@@ -25,6 +28,7 @@ public class RetrieveTransferSteps extends SubmitTransferSteps {
     public void givenNewServicePartnerOnboarded(@Named("identifier") String identifier,
             @Named("months") int months, @Named("apiBasePath") String apiBasePath) {
 
+        retrieveTransferApiBasePath = apiBasePath;
         registerReceiverServicePartnerRequest = createRegsiterServicePartnerRequest(identifier, months, apiBasePath);
         var response = client.post(REGISTER_PARTNER_URL, registerReceiverServicePartnerRequest, String.class);
         receiverPartnerIdentifier = response.getResponse();
@@ -55,17 +59,17 @@ public class RetrieveTransferSteps extends SubmitTransferSteps {
     public void thenRetrieveTransferResponseStatus(@Named("status") int status) {
         assertThat(retrieveTransferResponse.getRawResponse())
                 .extracting(raw -> raw.code())
-                .isEqualTo(201);
+                .isEqualTo(status);
     }
 
-    @Then("it contains a timestamp representing the retrieval confirmation due by time")
+    @Then("it contains a timestamp representing the retrieval confirmation due by time set in the future")
     public void thenRetrieveTransferResponseHasConfirmationDueBy() {
         assertThat(retrieveTransferResponse.getResponse())
                 .extracting(r -> r.getConfirmationDueBy())
                 .isNotNull();
 
         assertThat(retrieveTransferResponse.getResponse().getConfirmationDueBy())
-                .isAfter(LocalDateTime.now());
+                .isAfter(LocalDateTime.now(Clock.systemUTC().getZone()));
     }
 
     @Then("it contains a secret code to use for retrieval confirmation")

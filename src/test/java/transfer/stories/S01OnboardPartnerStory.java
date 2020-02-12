@@ -1,10 +1,10 @@
-package transfer.partner.stories;
+package transfer.stories;
 
 import transfer.LifecycleSteps;
 import transfer.jbehave.AbstractStory;
 import transfer.partner.rest.OnboardPartnerSteps;
 
-public class OnboardPartnerStory extends AbstractStory {
+public class S01OnboardPartnerStory extends AbstractStory {
 
     @Override
     public Object[] steps() {

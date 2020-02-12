@@ -17,12 +17,15 @@
     <Attribute name="confirmationCode" javaType="String" columnName="confirmation_code" nullable="false"
                readonly="true" maxLength="6"/>
 
-    <Attribute name="confirmationExpiry" javaType="Timestamp" columnName="confirmation_expiry" nullable="false"
-               readonly="true"/>
+    <Attribute name="confirmationExpiry" javaType="Timestamp" timezoneConversion="convert-to-utc"
+               columnName="confirmation_expiry" nullable="false" readonly="true"/>
 
-    <Attribute name="confirmedAt" javaType="Timestamp" columnName="confirmed_at"/>
-    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
-    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
+    <Attribute name="confirmedAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="confirmed_at"/>
+    <Attribute name="createdAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="created_at"
+               nullable="false" readonly="true"/>
+
+    <Attribute name="updatedAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="updated_at"
+               nullable="false"/>
 
     <Relationship name="retrievingServicePartner" relatedObject="ServicePartner" cardinality="many-to-one">
         this.retrievingServicePartnerId = ServicePartner.id

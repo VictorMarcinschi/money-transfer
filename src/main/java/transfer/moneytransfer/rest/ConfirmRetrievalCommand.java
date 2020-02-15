@@ -50,7 +50,6 @@ class ConfirmRetrievalCommand implements Command<ConfirmRetrievalRequest, Confir
                 .build();
 
         return CommandResult.<ConfirmRetrievalResponse>builder()
-                .validationResult(new ValidationResult())
                 .value(response)
                 .build();
     }

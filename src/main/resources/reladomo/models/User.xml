@@ -10,11 +10,8 @@
 
     <Attribute name="id" javaType="int" columnName="id" primaryKey="true" primaryKeyGeneratorStrategy="Max"/>
     <Attribute name="identifier" javaType="String" columnName="identifier" nullable="false" maxLength="36"/>
-    <Attribute name="createdAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="created_at"
-               nullable="false" readonly="true"/>
-
-    <Attribute name="updatedAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="updated_at"
-               nullable="false"/>
+    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
+    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
 
     <Relationship name="userDetails" relatedObject="UserDetails" relatedIsDependent="true" cardinality="one-to-one">
         this.id = UserDetails.userId

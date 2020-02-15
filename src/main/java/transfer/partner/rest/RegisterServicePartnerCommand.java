@@ -19,7 +19,6 @@ class RegisterServicePartnerCommand implements Command<RegisterServicePartnerReq
         servicePartnerRepository.create(partner);
 
         return CommandResult.<String>builder()
-                .validationResult(new ValidationResult())
                 .value(partner.getIdentifier())
                 .build();
     }

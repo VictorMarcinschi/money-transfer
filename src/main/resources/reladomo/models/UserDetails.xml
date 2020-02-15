@@ -11,11 +11,8 @@
     <Attribute name="userId" javaType="int" columnName="user_id" primaryKey="true"/>
     <Attribute name="email" javaType="String" columnName="email" maxLength="255"/>
     <Attribute name="phone" javaType="String" columnName="phone" maxLength="25"/>
-    <Attribute name="createdAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="created_at"
-               nullable="false" readonly="true"/>
-
-    <Attribute name="updatedAt" javaType="Timestamp" timezoneConversion="convert-to-utc" columnName="updated_at"
-               nullable="false"/>
+    <Attribute name="createdAt" javaType="Timestamp" columnName="created_at" nullable="false" readonly="true"/>
+    <Attribute name="updatedAt" javaType="Timestamp" columnName="updated_at" nullable="false"/>
 
     <Index name="uqUserDetailsEmail" unique="true">email</Index>
     <Index name="uqUserDetailsPhone" unique="true">phone</Index>

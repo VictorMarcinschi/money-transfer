@@ -21,7 +21,6 @@ class RetrieveTransferCommand implements Command<RetrieveTransferRequest, Retrie
         var retrieval = transferService.retrieveTransfer(request.getTransferIdentifier(), partner);
 
         return CommandResult.<RetrieveTransferResponse>builder()
-                .validationResult(new ValidationResult())
                 .value(new RetrieveTransferResponse(retrieval, systemClock.getZone()))
                 .build();
     }

@@ -7,6 +7,7 @@ import com.gs.fw.common.mithra.databasetype.DatabaseType;
 import com.gs.fw.common.mithra.databasetype.H2DatabaseType;
 
 import java.sql.Connection;
+import java.time.ZoneId;
 import java.util.TimeZone;
 
 public class H2ConnectionManager implements SourcelessConnectionManager {
@@ -14,6 +15,7 @@ public class H2ConnectionManager implements SourcelessConnectionManager {
     private static H2ConnectionManager instance;
 
     private final XAConnectionManager xaConnectionManager;
+    private ZoneId zoneId;
 
     public static synchronized H2ConnectionManager getInstance() {
         if (instance == null) {
@@ -26,7 +28,7 @@ public class H2ConnectionManager implements SourcelessConnectionManager {
         xaConnectionManager = new XAConnectionManager();
     }
 
-    public void init(String connectionString, String user, String password) {
+    public void init(String connectionString, String user, String password, ZoneId zoneId) {
         xaConnectionManager.setDriverClassName("org.h2.Driver");
         xaConnectionManager.setJdbcConnectionString(connectionString);
         xaConnectionManager.setJdbcUser(user);
@@ -35,6 +37,8 @@ public class H2ConnectionManager implements SourcelessConnectionManager {
         xaConnectionManager.setInitialSize(1);
         xaConnectionManager.setPoolSize(10);
         xaConnectionManager.initialisePool();
+
+        this.zoneId = zoneId;
     }
 
     @Override
@@ -54,7 +58,7 @@ public class H2ConnectionManager implements SourcelessConnectionManager {
 
     @Override
     public TimeZone getDatabaseTimeZone() {
-        return TimeZone.getDefault();
+        return TimeZone.getTimeZone(zoneId);
     }
 
     @Override

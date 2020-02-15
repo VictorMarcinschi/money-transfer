@@ -44,7 +44,6 @@ class SubmitTransferCommand implements Command<SubmitTransferRequest, SubmitTran
                 .build();
 
         return CommandResult.<SubmitTransferResponse>builder()
-                .validationResult(new ValidationResult())
                 .value(response)
                 .build();
     }

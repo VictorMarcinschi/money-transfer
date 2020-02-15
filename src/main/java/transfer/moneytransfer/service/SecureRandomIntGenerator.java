@@ -13,6 +13,6 @@ class SecureRandomIntGenerator implements RetrievalCodeGenerator {
 
     @Override
     public String generateFor(Transfer transfer) {
-        return String.valueOf(random.nextInt(bound));
+        return String.format("%06d", random.nextInt(bound));
     }
 }

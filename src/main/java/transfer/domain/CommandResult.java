@@ -1,17 +1,18 @@
 package transfer.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import transfer.validation.ValidationError;
 import transfer.validation.ValidationResult;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
 public class CommandResult<RES> {
 
-    private final ValidationResult validationResult;
+    @Builder.Default
+    private ValidationResult validationResult = new ValidationResult();
     private final RES value;
 
     public boolean isSuccessful() {

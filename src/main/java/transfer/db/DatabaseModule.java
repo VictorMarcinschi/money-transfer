@@ -6,6 +6,8 @@ import transfer.config.properties.ApplicationPropertiesModule;
 
 import javax.inject.Named;
 
+import java.time.Clock;
+
 import static transfer.config.properties.ApplicationProperties.DATASOURCE_PASSWORD;
 import static transfer.config.properties.ApplicationProperties.DATASOURCE_URL;
 import static transfer.config.properties.ApplicationProperties.DATASOURCE_USER;
@@ -16,8 +18,9 @@ class DatabaseModule {
     @Provides
     static ReladomoStarter provideReladomoStarter(@Named(DATASOURCE_URL) String connectionString,
             @Named(DATASOURCE_USER) String user,
-            @Named(DATASOURCE_PASSWORD) String password) {
+            @Named(DATASOURCE_PASSWORD) String password,
+            Clock systemClock) {
 
-        return new ReladomoStarter(connectionString, user, password);
+        return new ReladomoStarter(connectionString, user, password, systemClock);
     }
 }

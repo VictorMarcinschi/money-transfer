@@ -6,6 +6,8 @@ import com.gs.fw.common.mithra.MithraManagerProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Clock;
+
 @Slf4j
 @RequiredArgsConstructor
 public class ReladomoStarter {
@@ -16,9 +18,10 @@ public class ReladomoStarter {
     private final String connectionString;
     private final String user;
     private final String password;
+    private final Clock systemClock;
 
     public void start() {
-        H2ConnectionManager.getInstance().init(connectionString, user, password);
+        H2ConnectionManager.getInstance().init(connectionString, user, password, systemClock.getZone());
 
         MithraManager mithra = MithraManagerProvider.getMithraManager();
         mithra.setTransactionTimeout(TRANSACTION_TIMEOUT);

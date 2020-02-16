@@ -2,10 +2,10 @@ package transfer.validation.rules;
 
 import java.math.BigDecimal;
 
-public class PositiveNumberField<E> extends AbstractFieldValidationRule<E, BigDecimal> {
+public class PositiveNumberFieldRule<E> extends AbstractFieldValidationRule<E, BigDecimal> {
 
-    public PositiveNumberField(int index, int httpCode, FieldExtractor<E, BigDecimal> extractor, String fieldName) {
-        super(index, httpCode, extractor, fieldName);
+    public PositiveNumberFieldRule(int httpCode, FieldExtractor<E, BigDecimal> extractor, String fieldName) {
+        super(httpCode, extractor, fieldName);
     }
 
     @Override

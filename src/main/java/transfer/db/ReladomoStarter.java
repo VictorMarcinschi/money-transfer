@@ -12,24 +12,23 @@ import java.time.Clock;
 @RequiredArgsConstructor
 public class ReladomoStarter {
 
-    private static final String RUNTIME_CONFIG_LOCATION = "/reladomo/config/ReladomoRuntimeConfig.xml";
-    private static final int TRANSACTION_TIMEOUT = 30;
-
     private final String connectionString;
     private final String user;
     private final String password;
+    private final String configLocation;
+    private final int transactionTimeout;
     private final Clock systemClock;
 
     public void start() {
         H2ConnectionManager.getInstance().init(connectionString, user, password, systemClock.getZone());
 
         MithraManager mithra = MithraManagerProvider.getMithraManager();
-        mithra.setTransactionTimeout(TRANSACTION_TIMEOUT);
+        mithra.setTransactionTimeout(transactionTimeout);
 
-        try (var is = getClass().getResourceAsStream(RUNTIME_CONFIG_LOCATION)) {
+        try (var is = getClass().getResourceAsStream(configLocation)) {
             MithraManagerProvider.getMithraManager().readConfiguration(is);
 
-            log.info("Initialized Reladomo from config {}", RUNTIME_CONFIG_LOCATION);
+            log.info("Initialized Reladomo from config {}", configLocation);
         } catch (Exception e) {
             log.error("Could not initialize Reladomo. Exiting...");
             if (log.isDebugEnabled()) {

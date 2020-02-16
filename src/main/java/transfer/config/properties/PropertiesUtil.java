@@ -1,26 +1,23 @@
 package transfer.config.properties;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.Properties;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+
+import java.util.Optional;
+import java.util.Properties;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PropertiesUtil {
 
     @SneakyThrows
     public static Properties readSystemOverridableProperties(ClassLoader classLoader, String file) {
-        var defaults = readProperties(classLoader, file);
-
-        var systemPropertiesStore = new ByteArrayOutputStream();
-        System.getProperties().store(systemPropertiesStore, "");
-        var finalProperties = new Properties(defaults);
-        finalProperties.load(new ByteArrayInputStream(systemPropertiesStore.toByteArray()));
-
-        return finalProperties;
+        final var defaults = readProperties(classLoader, file);
+        System.getProperties().forEach((key, value) -> {
+            Optional.ofNullable(defaults.getProperty(key.toString()))
+                    .ifPresent(v -> defaults.setProperty(key.toString(), value.toString()));
+        });
+        return defaults;
     }
 
     @SneakyThrows

@@ -10,6 +10,9 @@ public final class ApplicationProperties {
     public static final String DATASOURCE_USER = "datasource.user";
     public static final String DATASOURCE_PASSWORD = "datasource.password";
 
+    public static final String RELADOMO_CONFIG_LOCATION = "reladomo.config.localtion";
+    public static final String TX_TIMEOUT = "tx.timeout";
+
     public static final String MIGRATIONS_ENABLED = "migrations.enabled";
     public static final String MIGRATIONS_CLEAN = "migrations.clean";
 

@@ -41,6 +41,18 @@ public class ApplicationPropertiesModule {
     }
 
     @Provides
+    @Named(ApplicationProperties.RELADOMO_CONFIG_LOCATION)
+    String provideReladomoConfigLocation(@Named(APPLICATION_PROPERTIES) Properties properties) {
+        return properties.getProperty(ApplicationProperties.RELADOMO_CONFIG_LOCATION);
+    }
+
+    @Provides
+    @Named(ApplicationProperties.TX_TIMEOUT)
+    int provideTxTimeout(@Named(APPLICATION_PROPERTIES) Properties properties) {
+        return Integer.valueOf(properties.getProperty(ApplicationProperties.TX_TIMEOUT));
+    }
+
+    @Provides
     @Named(ApplicationProperties.SERVER_PORT)
     int provideServerPort(@Named(APPLICATION_PROPERTIES) Properties properties) {
         return Integer.valueOf(properties.getProperty(ApplicationProperties.SERVER_PORT));

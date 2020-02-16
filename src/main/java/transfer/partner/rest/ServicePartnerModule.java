@@ -6,17 +6,22 @@ import dagger.Provides;
 import dagger.multibindings.IntoSet;
 import transfer.domain.Command;
 import transfer.domain.TransactionalCommand;
+import transfer.domain.ValidatedCommand;
 import transfer.partner.repository.ServicePartnerRepository;
 import transfer.partner.repository.ServicePartnerRepositoryModule;
+import transfer.partner.validation.ServicePartnerValidationModule;
 import transfer.rest.RestModule;
 import transfer.server.RouteDefinition;
 import transfer.server.SparkRouteDefinition;
+import transfer.validation.Validator;
 
 import javax.inject.Named;
 
 import java.time.Clock;
 
-@Module(includes = {RestModule.class, ServicePartnerRepositoryModule.class})
+import static transfer.partner.validation.ServicePartnerValidationModule.REGISTER_PARTNER_VALIDATOR;
+
+@Module(includes = {RestModule.class, ServicePartnerRepositoryModule.class, ServicePartnerValidationModule.class})
 public class ServicePartnerModule {
 
     private static final String COMMAND_ONBOARD = "onboardPartnerCommand";
@@ -39,8 +44,10 @@ public class ServicePartnerModule {
 
     @Provides
     @Named(COMMAND_ONBOARD)
-    static Command<RegisterServicePartnerRequest, String> onboardCommand(ServicePartnerRepository repository) {
+    static Command<RegisterServicePartnerRequest, String> onboardCommand(ServicePartnerRepository repository,
+            @Named(REGISTER_PARTNER_VALIDATOR) Validator<RegisterServicePartnerRequest> registerPartnerValidator) {
+
         var command = new RegisterServicePartnerCommand(repository);
-        return new TransactionalCommand<>(command);
+        return new TransactionalCommand<>(new ValidatedCommand<>(command, registerPartnerValidator));
     }
 }

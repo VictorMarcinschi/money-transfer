@@ -4,8 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class NonBlankFieldRule<E> extends AbstractFieldValidationRule<E, String> {
 
-    public NonBlankFieldRule(int index, FieldExtractor<E, String> extractor, int httpCode, String fieldName) {
-        super(index, httpCode, extractor, fieldName);
+    public NonBlankFieldRule(int httpCode, FieldExtractor<E, String> extractor, String fieldName) {
+        super(httpCode, extractor, fieldName);
     }
 
     @Override

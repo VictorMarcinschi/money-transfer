@@ -5,21 +5,14 @@ import transfer.validation.ValidationRule;
 
 public abstract class AbstractFieldValidationRule<E, F> implements ValidationRule<E> {
 
-    private final int index;
     private final int httpCode;
     private final FieldExtractor<E, F> extractor;
     protected final String fieldName;
 
-    public AbstractFieldValidationRule(int index, int httpCode, FieldExtractor<E, F> extractor, String fieldName) {
-        this.index = index;
+    public AbstractFieldValidationRule(int httpCode, FieldExtractor<E, F> extractor, String fieldName) {
         this.httpCode = httpCode;
         this.extractor = extractor;
         this.fieldName = fieldName;
-    }
-
-    @Override
-    public int index() {
-        return index;
     }
 
     protected F extract(E from) {

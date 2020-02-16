@@ -12,12 +12,13 @@ class LoggingRouteDefinition implements SparkRouteDefinition {
     @Override
     public void define() {
         before((req, res) -> {
-            log.info("Received request {} {} with params {}\n{}", req.requestMethod(), req.pathInfo(),
-                    req.params(), req.body());
+            log.info("Received request {} {} with params {}\n{}",
+                    req.requestMethod(), req.pathInfo(), req.params(), req.body());
         });
 
         after((req, res) -> {
-            log.info("Sending response for {} {}\n{}", req.requestMethod(), req.pathInfo(), res.body());
+            log.info("Sending response for {} {}\nStatus: {}\n{}",
+                    req.requestMethod(), req.pathInfo(), res.status(), res.body());
         });
     }
 }

@@ -4,8 +4,8 @@ import java.util.Optional;
 
 public class NonNullFieldRule<E> extends AbstractFieldValidationRule<E, Object> {
 
-    public NonNullFieldRule(int index, int httpCode, FieldExtractor<E, Object> extractor, String fieldName) {
-        super(index, httpCode, extractor, fieldName);
+    public NonNullFieldRule(int httpCode, FieldExtractor<E, Object> extractor, String fieldName) {
+        super(httpCode, extractor, fieldName);
     }
 
     @Override

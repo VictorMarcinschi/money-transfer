@@ -3,6 +3,7 @@ package transfer.partner.rest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import transfer.partner.model.ServicePartner;
@@ -13,7 +14,8 @@ import java.time.LocalDate;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(access = AccessLevel.PACKAGE)
 @ToString
-class RegisterServicePartnerRequest {
+@Getter
+public class RegisterServicePartnerRequest {
 
     @JsonProperty
     private final String identifier;

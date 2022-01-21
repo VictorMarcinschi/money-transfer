@@ -12,7 +12,7 @@
     <properties>
         <dagger.version>2.26</dagger.version>
         <flyway.version>6.2.1</flyway.version>
-        <h2.version>1.4.200</h2.version>
+        <h2.version>2.1.210</h2.version>
         <lombok.version>1.18.10</lombok.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <commons-lang3.version>3.9</commons-lang3.version>

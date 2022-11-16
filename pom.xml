@@ -19,7 +19,7 @@
         <spark.version>2.9.1</spark.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <jackson.version>2.10.2</jackson.version>
+        <jackson.version>2.12.7.1</jackson.version>
         <reladomo.version>17.1.4</reladomo.version>
 
         <!-- Testing dependency versions -->
